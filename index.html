@@ -860,7 +860,7 @@
                     <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
                       ${post.title}
                     </h3>
-                    <p class="text-gray-600 mb-4 leading-relaxed">${post.snippet || 'Click to read more...'}</p>
+                    <p class="text-gray-600 mb-4 leading-relaxed">${(post.snippet || 'Click to read more...').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
                     <div class="flex items-center text-blue-600 font-medium">
                       Read Article
                       <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -950,14 +950,13 @@
               }
             });
             
-            // Render math with KaTeX
+            // Render math with KaTeX - ONLY use $$ and \( \) to avoid conflicts with currency
             if (window.renderMathInElement) {
               renderMathInElement(document.getElementById('blog-post'), {
                 delimiters: [
                   {left: '$$', right: '$$', display: true},
-                  {left: '$', right: '$', display: false},
-                  {left: '\\[', right: '\\]', display: true},
-                  {left: '\\(', right: '\\)', display: false}
+                  {left: '\\(', right: '\\)', display: false},
+                  {left: '\\[', right: '\\]', display: true}
                 ],
                 throwOnError: false
               });

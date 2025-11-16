@@ -16,7 +16,7 @@ window.postsReady = (async () => {
     'blog2-medium': 'Why does asymmetric loss lead to quantile predictions? Dive deep into the pinball loss function and understand the mathematical engine powering quantile regression.',
     'blog3-medium': 'Build your first quantile regression model in Python. Step-by-step implementation with statsmodels, complete with evaluation metrics and real-world examples.',
     'blog4-medium': 'Scale quantile regression to non-linear patterns with gradient boosting. Learn LightGBM and XGBoost techniques for production-grade probabilistic forecasting.',
-    'blog5-medium': 'Master state-of-the-art techniques: conformal prediction, distributional regression, and neural network approaches for robust uncertainty quantification in production.'
+    'blog5-medium': 'Master state-of-the-art techniques including conformal prediction, distributional regression, and neural network approaches for robust uncertainty quantification in production.'
   };
   const pathCandidates = ['actual_contents/', 'public/actual_contents/'];
 
@@ -128,7 +128,7 @@ window.postsReady = (async () => {
       const mathPlaceholders = [];
       let mathCounter = 0;
       
-      // Protect display math ($$...$$)
+      // Protect display math ($$...$$) FIRST - highest priority
       contentText = contentText.replace(/\$\$([\s\S]*?)\$\$/g, (match) => {
         const placeholder = `XXXXXMATHDISPLAYXXXXX${mathCounter}XXXXXMATHDISPLAYXXXXX`;
         mathPlaceholders.push({ placeholder, content: match });
@@ -136,12 +136,34 @@ window.postsReady = (async () => {
         return placeholder;
       });
       
-      // Protect inline math ($...$)
-      contentText = contentText.replace(/\$([^\$\n]+?)\$/g, (match) => {
+      // Protect \[...\] display math
+      contentText = contentText.replace(/\\\[([\s\S]*?)\\\]/g, (match) => {
+        const placeholder = `XXXXXMATHDISPLAYXXXXX${mathCounter}XXXXXMATHDISPLAYXXXXX`;
+        mathPlaceholders.push({ placeholder, content: match });
+        mathCounter++;
+        return placeholder;
+      });
+      
+      // Protect \(...\) inline math - THIS IS CRITICAL
+      contentText = contentText.replace(/\\\(([\s\S]*?)\\\)/g, (match) => {
         const placeholder = `XXXXXMATHINLINEXXXXX${mathCounter}XXXXXMATHINLINEXXXXX`;
         mathPlaceholders.push({ placeholder, content: match });
         mathCounter++;
         return placeholder;
+      });
+      
+      // Protect inline math with LaTeX commands ($\text{...}$, $\beta$, etc) - for backward compatibility
+      contentText = contentText.replace(/\$([^\$\n]*?[\\{}_^][^\$\n]*?)\$/g, (match) => {
+        const placeholder = `XXXXXMATHINLINEXXXXX${mathCounter}XXXXXMATHINLINEXXXXX`;
+        mathPlaceholders.push({ placeholder, content: match });
+        mathCounter++;
+        return placeholder;
+      });
+      
+      // Now protect currency dollar signs (like $1.2M, $800K, $10M)
+      contentText = contentText.replace(/\$(\d+(?:\.\d+)?[KMB]?)\b/g, (match, amount) => {
+        // Just keep the dollar sign as-is since KaTeX won't treat single $ as delimiter anymore
+        return match;
       });
       
       let content = converter.makeHtml(contentText);

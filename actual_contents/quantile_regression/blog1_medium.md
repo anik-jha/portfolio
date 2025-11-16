@@ -4,7 +4,7 @@
 
 ---
 
-![OLS vs Quantile Regression comparison](../assets/ols_vs_qr_median.png)
+![OLS vs Quantile Regression comparison](assets/ols_vs_qr_median.png)
 
 **Reading time: ~18 minutes** ☕️
 
@@ -43,13 +43,13 @@ Let's start with three real-world scenarios where predicting the mean leads to d
 
 ### Scenario 1: Housing Prices in San Francisco
 
-You're a real estate investor. Your ML model predicts house prices based on square footage, bedrooms, location. For a specific property, it says: **$1.2M**.
+You're a real estate investor. Your ML model predicts house prices based on square footage, bedrooms, location. For a specific property, it says: $1.2M.
 
 You bid $1.25M (confident you're getting a deal). You lose. The property sells for $1.8M.
 
 **What happened?**
 
-Your model predicted the *conditional mean*: $E[\text{price} \mid \text{features}] = 1.2M$. But houses in that neighborhood have **high variance**—some sell for $800K, others for $2M. The *distribution* is wide, and you were blindsided by the upper tail.
+Your model predicted the *conditional mean*: \(E[\text{price} \mid \text{features}] = 1.2M\). But houses in that neighborhood have **high variance**—some sell for $800K, others for $2M. The *distribution* is wide, and you were blindsided by the upper tail.
 
 **With quantile regression**, you'd know:
 - 10th percentile: $900K (bargain scenario)
@@ -120,9 +120,9 @@ $$\min_{\beta} \sum_{i=1}^{n} (y_i - x_i^T \beta)^2$$
 **Quantile regression (for quantile τ) minimizes**:
 $$\min_{\beta(\tau)} \sum_{i=1}^{n} \rho_{\tau}(y_i - x_i^T \beta(\tau))$$
 
-Notice the $\beta(\tau)$: we get *different* coefficients for each quantile. This is a key difference from OLS, which gives a single $\beta$ for all predictions.
+Notice the \(\beta(\tau)\): we get *different* coefficients for each quantile. This is a key difference from OLS, which gives a single \(\beta\) for all predictions.
 
-The $\rho_{\tau}(u)$ is the **pinball loss** (also called check loss):
+The \(\rho_{\tau}(u)\) is the **pinball loss** (also called check loss):
 
 $$\rho_{\tau}(u) = \begin{cases} 
 \tau \cdot u & \text{if } u \geq 0 \\
@@ -271,7 +271,7 @@ This gives you a sense of central tendency + spread without overfitting.
 
 ### 2. Visualize Your Data First
 
-Plot $Y$ vs. $X$. Do you see "funnel shapes" (heteroscedasticity)? Outliers? If yes, QR will help. If constant variance, stick with OLS.
+Plot \(Y\) vs. \(X\). Do you see "funnel shapes" (heteroscedasticity)? Outliers? If yes, QR will help. If constant variance, stick with OLS.
 
 ### 3. Choose τ Based on Business Context
 

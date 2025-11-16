@@ -81,7 +81,13 @@ window.postsReady = (async () => {
       // Extract title from first H1 (# Title) if not found in frontmatter
       if (!title) {
         const titleMatch = contentText.match(/^#\s+(.+)$/m);
-        title = titleMatch ? titleMatch[1].trim() : file.replace(/\.md$/i, '');
+        if (titleMatch) {
+          title = titleMatch[1].trim();
+          // Remove the title H1 from content to avoid duplication
+          contentText = contentText.replace(/^#\s+(.+)$/m, '').trim();
+        } else {
+          title = file.replace(/\.md$/i, '');
+        }
       }
 
       // Slug from file name (remove extension and path)
@@ -152,10 +158,13 @@ window.postsReady = (async () => {
         return placeholder;
       });
       
-      // Protect inline math with LaTeX commands ($\text{...}$, $\beta$, etc) - for backward compatibility
-      contentText = contentText.replace(/\$([^\$\n]*?[\\{}_^][^\$\n]*?)\$/g, (match) => {
+      // Convert legacy $...$ inline math to \(...\), excluding currency like $1.2M
+      contentText = contentText.replace(/\$([^\$\n]+?)\$/g, (match, inner) => {
+        if (/^\d+(?:\.\d+)?(?:[KMB])?$/.test(inner)) {
+          return match; // leave currency as-is
+        }
         const placeholder = `XXXXXMATHINLINEXXXXX${mathCounter}XXXXXMATHINLINEXXXXX`;
-        mathPlaceholders.push({ placeholder, content: match });
+        mathPlaceholders.push({ placeholder, content: `\\(${inner}\\)` });
         mathCounter++;
         return placeholder;
       });
@@ -173,9 +182,9 @@ window.postsReady = (async () => {
         content = content.split(placeholder).join(mathContent);
       });
       
-      // Fix image paths: replace ../assets/ or assets/ with correct path to assets folder
-      content = content.replace(/<img([^>]+)src="\.\.\/assets\/([^"]+)"([^>]*)>/g, '<img$1src="assets/$2"$3>');
-      content = content.replace(/<img([^>]+)src="assets\/([^"]+)"([^>]*)>/g, '<img$1src="assets/$2"$3>');
+      // Fix image paths: replace assets/ with correct path to quantile_regression assets folder
+      content = content.replace(/<img([^>]+)src="\.\.\/assets\/([^"]+)"([^>]*)>/g, '<img$1src="actual_contents/quantile_regression/assets/$2"$3>');
+      content = content.replace(/<img([^>]+)src="assets\/([^"]+)"([^>]*)>/g, '<img$1src="actual_contents/quantile_regression/assets/$2"$3>');
 
       window.posts.push({ slug, title, date, snippet, content });
     } catch (err) {

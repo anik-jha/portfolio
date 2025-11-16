@@ -18,7 +18,7 @@ At the heart of quantile regression is a deceptively simple function called the 
 
 You could. But understanding pinball loss gives you superpowers:
 - **Debug failures**: When your 90th percentile predictions are off, you'll know whether to adjust τ, your loss function, or your data
-- **Customize for your domain**: The formula $\tau = \frac{C_{\text{under}}}{C_{\text{under}} + C_{\text{over}}}$ only makes sense if you understand *why* asymmetric loss creates quantiles
+- **Customize for your domain**: The formula \( \tau = \frac{C_{\text{under}}}{C_{\text{under}} + C_{\text{over}}} \) only makes sense if you understand *why* asymmetric loss creates quantiles
 - **Explain to stakeholders**: "We're minimizing pinball loss with τ=0.9" is gibberish. "We're penalizing under-predictions 9× more because outages cost $100K" is actionable.
 
 Let's dive in.
@@ -39,9 +39,9 @@ By the end, you'll have a deep understanding of the mathematical machinery power
 
 ### Quick Recap: What's a Quantile?
 
-The **τ-quantile** (or $100 \tau$-th percentile) of a distribution is the value $q$ such that:
-- Probability of being below $q$: $P(Y \leq q) = \tau$
-- Probability of being above $q$: $P(Y > q) = 1 - \tau$
+The **τ-quantile** (or \(100 \tau\)-th percentile) of a distribution is the value \(q\) such that:
+- Probability of being below \(q\): \(P(Y \leq q) = \tau\)
+- Probability of being above \(q\): \(P(Y > q) = 1 - \tau\)
 
 Examples:
 - **τ=0.5**: Median (50th percentile)—half above, half below
@@ -54,11 +54,11 @@ Here's the key insight: **quantiles minimize expected loss** for a specific loss
 
 For the mean:
 $$\mu = \arg\min_{c} E[(Y - c)^2]$$
-The mean $\mu$ minimizes squared loss (MSE).
+The mean \(\mu\) minimizes squared loss (MSE).
 
 For the τ-quantile:
 $$q_{\tau} = \arg\min_{c} E[\rho_{\tau}(Y - c)]$$
-The quantile $q_{\tau}$ minimizes **pinball loss** $\rho_{\tau}$.
+The quantile \(q_{\tau}\) minimizes **pinball loss** \(\rho_{\tau}\).
 
 This is profound: *changing the loss function changes the optimal predictor* from mean to quantile.
 
@@ -68,7 +68,7 @@ This is profound: *changing the loss function changes the optimal predictor* fro
 
 Before diving deeper, let's contrast the two losses:
 
-| Property | MSE $(y - \hat{y})^2$ | Pinball $\rho_{\tau}(y - \hat{y})$ |
+| Property | MSE \((y - \hat{y})^2\) | Pinball \(\rho_{\tau}(y - \hat{y})\) |
 |----------|----------------------|-----------------------------------|
 | **Finds** | Mean | τ-quantile |
 | **Symmetry** | Symmetric | Asymmetric |
@@ -95,23 +95,23 @@ $$\rho_{\tau}(u) = \begin{cases}
 Or equivalently:
 $$\rho_{\tau}(u) = u \cdot (\tau - \mathbb{1}_{u < 0})$$
 
-where $u = y - \hat{y}$ is the residual (error).
+where \(u = y - \hat{y}\) is the residual (error).
 
 ### Intuition
 
 The pinball loss is **piecewise linear** with two slopes:
-- **Slope above zero** (under-prediction): $\tau$
-- **Slope below zero** (over-prediction): $1 - \tau$
+- **Slope above zero** (under-prediction): \(\tau\)
+- **Slope below zero** (over-prediction): \(1 - \tau\)
 
 For **τ=0.9** (90th percentile):
-- Under-predict by 1 unit → loss = $0.9 \times 1 = 0.9$
-- Over-predict by 1 unit → loss = $0.1 \times 1 = 0.1$
+- Under-predict by 1 unit → loss = \(0.9 \times 1 = 0.9\)
+- Over-predict by 1 unit → loss = \(0.1 \times 1 = 0.1\)
 
 Under-predictions are penalized **9× more** than over-predictions. This asymmetry pushes the model to predict *high* so that 90% of observations fall below.
 
 For **τ=0.5** (median):
-- Under-predict by 1 unit → loss = $0.5 \times 1 = 0.5$
-- Over-predict by 1 unit → loss = $0.5 \times 1 = 0.5$
+- Under-predict by 1 unit → loss = \(0.5 \times 1 = 0.5\)
+- Over-predict by 1 unit → loss = \(0.5 \times 1 = 0.5\)
 
 Balanced penalties → finds the median.
 
@@ -170,8 +170,8 @@ The forces balance exactly when $c$ splits the data so that the fraction below e
 ### The General Pattern
 
 For any quantile τ:
-- When forces balance: (fraction below) × $(1-\tau)$ = (fraction above) × $\tau$
-- Rearranging: (fraction below) = $\tau$
+- When forces balance: (fraction below) × \(1-\tau\) = (fraction above) × \(\tau\)
+- Rearranging: (fraction below) = \(\tau\)
 - That's exactly the τ-quantile!
 
 **Why the asymmetry matters**: If τ=0.9:
@@ -190,7 +190,7 @@ Equal penalties → the model doesn't care if it's high or low, it just wants to
 
 ## From Sample to Conditional Quantile
 
-So far, we've talked about the **unconditional quantile** (quantile of $Y$ without considering $X$). Quantile regression extends this to **conditional quantiles**: $Q_{\tau}(Y \mid X)$.
+So far, we've talked about the **unconditional quantile** (quantile of \(Y\) without considering \(X\)). Quantile regression extends this to **conditional quantiles**: \(Q_{\tau}(Y \mid X)\).
 
 **In plain English**: Instead of just asking "what's the 90th percentile of all heights?", we now ask "what's the 90th percentile of heights *given that someone is 6 feet tall*?" We're conditioning on information ($X$).
 
@@ -199,9 +199,9 @@ So far, we've talked about the **unconditional quantile** (quantile of $Y$ witho
 Assume:
 $$Q_{\tau}(Y \mid X) = X^T \beta(\tau)$$
 
-**Translation**: "We're guessing that the 90th percentile is just a straight line. The line depends on $X$ (like height), and we write it as $X^T \beta(\tau)$, which just means 'multiply $X$ by some numbers ($\beta$) and add them up'."
+**Translation**: "We're guessing that the 90th percentile is just a straight line. The line depends on \(X\) (like height), and we write it as \(X^T \beta(\tau)\), which just means 'multiply \(X\) by some numbers (\(\beta\)) and add them up'."
 
-We find $\beta(\tau)$ by minimizing the sample pinball loss:
+We find \(\beta(\tau)\) by minimizing the sample pinball loss:
 
 $$\min_{\beta} \sum_{i=1}^{n} \rho_{\tau}(y_i - x_i^T \beta)$$
 

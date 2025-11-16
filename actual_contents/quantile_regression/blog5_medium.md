@@ -112,7 +112,18 @@ for tau in taus:
         print(f"Fitted τ={tau:.2f}")
 ```
 
-**Time**: ~5 minutes on a laptop (99 models × 300 trees each). **Parallelize** for production (see below).
+**Output**
+```
+Fitted τ=0.10
+Fitted τ=0.20
+Fitted τ=0.30
+Fitted τ=0.40
+Fitted τ=0.50
+Fitted τ=0.60
+Fitted τ=0.70
+Fitted τ=0.80
+Fitted τ=0.90
+```
 
 ---
 
@@ -137,6 +148,9 @@ plt.grid(alpha=0.3)
 plt.tight_layout()
 plt.show()
 ```
+
+![OLS](assets/5_1.png)
+
 
 **How to read this CDF plot**:
 - **X-axis**: Predicted value of Y
@@ -213,7 +227,12 @@ models = dict(results)
 print(f"Trained {len(models)} models in parallel")
 ```
 
-**Speedup**: 8× faster (5 min → 40 sec on 8-core machine).
+**Output**
+```
+Trained 99 models in parallel
+```
+
+**Speedup**: 8× faster.
 
 ---
 
@@ -262,7 +281,10 @@ y_pred_qrf = qrf.predict(X_test, quantiles=taus_qrf)
 # y_pred_qrf is shape (n_test, len(taus_qrf))
 print(f"Predicted {len(taus_qrf)} quantiles for {len(X_test)} test points")
 ```
-
+**Output**
+```
+Predicted 99 quantiles for 400 test points
+```
 ---
 
 ### Visualize Full Distribution from QRF
@@ -286,7 +308,32 @@ plt.grid(alpha=0.3)
 plt.tight_layout()
 plt.show()
 ```
+![output](assets/5_2.png)
 
+**💾 Save LightGBM Models**
+
+If you want to use the LightGBM models later, save them now.
+
+```python
+# Save test data and models to disk for later use
+import pickle
+
+# Save both LightGBM models and test data to separate files
+with open('lgb_models.pkl', 'wb') as f:
+    pickle.dump(models, f)
+    
+saved_test_data = {
+    'X_test': X_test.copy(),
+    'y_test': y_test.copy(),
+    'models': models
+}
+
+with open('saved_test_data.pkl', 'wb') as f:
+    pickle.dump(saved_test_data, f)
+
+print("✅ Saved LightGBM models to lgb_models.pkl")
+print("✅ Saved test data and models to saved_test_data.pkl")
+```
 ---
 
 ### Advantages of QRF
@@ -497,8 +544,8 @@ print(f"Best validation loss: {study.best_value:.4f}")
 **Output** (example):
 ```
 Best hyperparameters:
-{'hidden_dim': 128, 'learning_rate': 0.0023, 'dropout': 0.25, 'batch_size': 64}
-Best validation loss: 1.2341
+{'hidden_dim': 189, 'learning_rate': 0.0006425453738178373, 'dropout': 0.2147825833770036, 'batch_size': 64}
+Best validation loss: 1.6204
 ```
 
 ---
@@ -640,9 +687,6 @@ def quantile_calibration_plot(y_test, quantile_preds, taus):
     plt.tight_layout()
     plt.show()
 
-# NOTE: This assumes you've already trained the dense grid models from Step 1
-# If you haven't, run the code from "Step 1: Fit 99 Quantile Models" first
-# This creates: taus (array of quantiles), models (dict of trained models), X_test, y_test
 
 # First, generate predictions for all test points
 quantile_preds_test = {}
@@ -652,6 +696,7 @@ for tau in taus:
 # Now plot calibration
 quantile_calibration_plot(y_test, quantile_preds_test, taus)
 ```
+![output](assets/5_3.png)
 
 **Interpretation**:
 - **On diagonal**: Well-calibrated

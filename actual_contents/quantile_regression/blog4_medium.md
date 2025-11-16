@@ -76,12 +76,12 @@ Skip if you're already familiar. Otherwise, here's the gist:
 Gradient boosting builds an **ensemble of weak learners** (usually decision trees) sequentially. Each tree corrects errors of the previous ensemble.
 
 **Algorithm**:
-1. Start with $f_0(x) = \text{median}(y)$ (or mean)
-2. For $m = 1, 2, \ldots, M$:
+1. Start with \(f_0(x) = \text{median}(y)\) (or mean)
+2. For \(m = 1, 2, \ldots, M\):
    - Compute pseudo-residuals (negative gradients of loss w.r.t. predictions)
-   - Fit tree $h_m(x)$ to predict pseudo-residuals
-   - Update: $f_m(x) = f_{m-1}(x) + \eta \cdot h_m(x)$ (η = learning rate)
-3. Final model: $f_M(x)$ (sum of $M$ trees)
+    - Fit tree \(h_m(x)\) to predict pseudo-residuals
+    - Update: \(f_m(x) = f_{m-1}(x) + \eta \cdot h_m(x)\) (η = learning rate)
+3. Final model: \(f_M(x)\) (sum of \(M\) trees)
 
 **The "gradient" part**: Instead of fitting residuals directly, fit the *negative gradient* of the loss function. For MSE, gradient = residual. For pinball loss, gradient = subgradient (see Blog 2).
 
@@ -123,7 +123,7 @@ dtrain = lgb.Dataset(X_train, label=y_train)
 model = lgb.train(params, dtrain, num_boost_round=500)
 ```
 
-**Key parameter**: `alpha` = $\tau$. Set to 0.1 for 10th percentile, 0.9 for 90th, etc.
+**Key parameter**: `alpha` = \(\tau\). Set to 0.1 for 10th percentile, 0.9 for 90th, etc.
 
 Under the hood:
 1. Computes subgradient of pinball loss for each sample
@@ -163,7 +163,7 @@ plt.ylabel('y')
 plt.title('Non-Linear Data with Heteroscedasticity')
 plt.show()
 ```
-
+![output](assets/4_1.png)
 **What you'll see**: A wavy pattern (sinusoidal + quadratic) with increasing variance.
 
 ---
@@ -245,7 +245,7 @@ plt.legend(fontsize=11)
 plt.tight_layout()
 plt.show()
 ```
-
+![output](assets/4_2.png)
 **What you'll see**: 
 - Quantile lines follow the non-linear pattern (sin + quadratic)
 - Prediction interval **widens and narrows** adaptively
@@ -323,7 +323,7 @@ plt.legend(title='Feature', fontsize=10)
 plt.tight_layout()
 plt.show()
 ```
-
+![output](assets/4_3.png)
 **Output**:
 ```
                    0.1        0.5        0.9
@@ -459,9 +459,9 @@ print(f"Best validation loss: {study.best_value:.4f}")
 **Output** (example):
 ```
 Best hyperparameters:
-{'learning_rate': 0.0234, 'num_leaves': 47, 'min_data_in_leaf': 28, 
- 'feature_fraction': 0.87, 'bagging_fraction': 0.72, 'bagging_freq': 3}
-Best validation loss: 0.8123
+{'learning_rate': 0.028, 'num_leaves': 26, 'min_data_in_leaf': 72, 
+'feature_fraction': 0.72, 'bagging_fraction': 0.56, 'bagging_freq': 5}
+Best validation loss: 1.7397
 ```
 
 ### Retrain with Best Params
@@ -499,6 +499,7 @@ fig1.show()
 fig2 = plot_param_importances(study)
 fig2.show()
 ```
+![output](assets/4_4.png)
 
 **Insights from plots**:
 - **Optimization history**: Shows loss converging over trials (Bayesian optimization learning)
@@ -547,11 +548,17 @@ for tau in [0.1, 0.5, 0.9]:
     print(f"Best params: {best_params_by_quantile[tau]}")
 ```
 **Output**
- - **τ=0.1** Best params: {'learning_rate': 0.039178338390933425, 'num_leaves': 118, 'min_data_in_leaf': 100}
- - **τ=0.5** Best params: {'learning_rate': 0.01607123851203988, 'num_leaves': 48, 'min_data_in_leaf': 61}
- - **τ=0.9** Best params: {'learning_rate': 0.04003657792264009, 'num_leaves': 36, 'min_data_in_leaf': 128}
+```
+Optimizing for τ=0.1... 
+Best params: {'learning_rate': 0.039, 'num_leaves': 118, 'min_data_in_leaf': 100}
 
-**Typical findings**:
+Optimizing for τ=0.5...
+Best params: {'learning_rate': 0.016, 'num_leaves': 48, 'min_data_in_leaf': 61}
+
+Optimizing for τ=0.9...
+Best params: {'learning_rate': 0.040, 'num_leaves': 36, 'min_data_in_leaf': 128}
+```
+**Findings**:
 - **τ=0.9** (upper tail): Needs higher `min_data_in_leaf` (50–100) to avoid overfitting to sparse extremes
 - **τ=0.5** (median): Default settings often work well
 - **τ=0.1** (lower tail): Similar to 0.9 (regularization important for extremes)
@@ -563,7 +570,7 @@ for tau in [0.1, 0.5, 0.9]:
 When fitting many quantiles independently, you might get **quantile crossing**: 
 
 
-$\hat{Q}_{0.6}(x) < \hat{Q}_{0.5}(x)$ for some $x$—logically invalid.
+\(\hat{Q}_{0.6}(x) < \hat{Q}_{0.5}(x)\) for some \(x\)—logically invalid.
 
 ### Why It Happens
 
@@ -571,9 +578,9 @@ Each quantile model is trained independently → no monotonicity constraint → 
 
 ### Solution 1: Post-Hoc Isotonic Regression
 
-After training, for each sample $x_i$, sort predictions across $\tau$ to enforce 
+After training, for each sample \(x_i\), sort predictions across \(\tau\) to enforce 
 
-$\hat{Q}_{0.1}(x) \leq \hat{Q}_{0.5}(x) \leq \hat{Q}_{0.9}(x)$.
+\(\hat{Q}_{0.1}(x) \leq \hat{Q}_{0.5}(x) \leq \hat{Q}_{0.9}(x)\).
 
 ```python
 # For each sample, enforce monotonicity across quantiles
@@ -623,32 +630,7 @@ For 3–5 quantiles, crossing is rare. Don't pre-optimize.
 
 ## Production Tips
 
-### 1. GPU Acceleration (5–20× Speedup)
-
-**Prerequisites**:
-- NVIDIA GPU with CUDA support (GeForce GTX 1060+, Tesla, etc.)
-- CUDA Toolkit installed ([guide](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html))
-- LightGBM installed with GPU support: `pip install lightgbm --config-settings=cmake.define.USE_GPU=ON`
-
-**Usage**:
-```python
-params = {
-    'objective': 'quantile',
-    'alpha': 0.9,
-    'device': 'gpu',
-    'gpu_platform_id': 0,  # Usually 0 for single-GPU systems
-    'gpu_device_id': 0,
-    ...
-}
-```
-
-**Verify GPU usage**: Watch GPU utilization with `nvidia-smi` while training. Should see 70–95% usage.
-
-**Fallback**: If GPU setup fails, LightGBM falls back to CPU (just slower, not broken).
-
-**Speedup**: 5–20× faster training (hours → minutes).
-
-### 2. Monitor Coverage Over Time
+### 1. Monitor Coverage Over Time
 
 Data drifts. An 80% interval in January might be 60% in July.
 
@@ -660,14 +642,14 @@ if coverage_weekly < 0.75:  # Trigger alert if < 75% (target: 80%)
     send_alert("QR model miscalibrated: retrain needed")
 ```
 
-### 3. Separate Models per Quantile
+### 2. Separate Models per Quantile
 
 Don't try to cram all quantiles into one model (e.g., multi-output regression). Train separately:
 - Simpler debugging
 - Quantile-specific hyperparameters
 - Easier to update (retrain just 90th percentile if tail coverage drops)
 
-### 4. Save and Version Models
+### 3. Save and Version Models
 
 ```python
 # Save
@@ -687,7 +669,7 @@ model_metadata = {
 # Save metadata alongside model
 ```
 
-### 5. Feature Engineering Still Helps
+### 4. Feature Engineering Still Helps
 
 GBMs are powerful but not magic. Good features boost performance:
 - **Temporal**: hour, day_of_week, month, is_holiday

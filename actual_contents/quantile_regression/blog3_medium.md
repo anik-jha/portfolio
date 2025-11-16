@@ -98,6 +98,11 @@ plt.title('Synthetic Data: Heteroscedastic + Outliers', fontsize=14)
 plt.tight_layout()
 plt.show()
 ```
+---
+
+![data](assets/3_1.png)
+
+---
 
 **What you'll see**: A "funnel" shape—points spread out as $x$ increases. Plus a few extreme outliers pulling upward.
 
@@ -131,6 +136,7 @@ plt.legend(fontsize=11)
 plt.tight_layout()
 plt.show()
 ```
+![output2](assets/3_2.png)
 
 **Output**:
 ```
@@ -208,6 +214,7 @@ plt.legend(fontsize=10, loc='upper left')
 plt.tight_layout()
 plt.show()
 ```
+![plot output3](assets/3_3.png)
 
 **What you'll see**:
 - **QR lines diverge** as $x$ increases → captures heteroscedasticity
@@ -264,6 +271,8 @@ plt.legend(fontsize=11)
 plt.tight_layout()
 plt.show()
 ```
+![plot output4](assets/3_4.png)
+
 
 **What you'll see**: A widening band around the median—narrow at low $x$, wide at high $x$. This is **adaptive uncertainty**.
 
@@ -586,7 +595,9 @@ plt.ylabel('Residual')
 plt.title('Residual Plot (Median QR)')
 plt.show()
 ```
-
+---
+![plot output5](assets/3_5.png)
+---
 If you see patterns (e.g., funnel, curve), add non-linear terms or switch to GBM (Blog 4).
 
 ---

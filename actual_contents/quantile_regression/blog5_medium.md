@@ -987,7 +987,9 @@ curl -X POST http://localhost:5000/predict \
   -H "Content-Type: application/json" \
   -d '{"features": [2.5, 18, 0.7], "quantiles": [0.1, 0.5, 0.9]}'
 ```
-
+```
+{"predictions":{"0.1":-1.9918830499127644,"0.5":2.259243923600352,"0.9":4.9304976487978145}}
+```
 ---
 
 ### Monitoring in Production

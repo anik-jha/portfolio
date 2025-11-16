@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anik Jha - Senior ML Engineer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+  <!-- KaTeX for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    .prose {
+      max-width: 100%;
+    }
+    
+    .prose h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #1a202c;
+    }
+    
+    .prose h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #2d3748;
+    }
+    
+    .prose h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #2d3748;
+    }
+    
+    .prose p {
+      margin-bottom: 1rem;
+      line-height: 1.75;
+      color: #4a5568;
+    }
+    
+    .prose ul, .prose ol {
+      margin-bottom: 1rem;
+      padding-left: 2rem;
+      list-style-type: disc;
+    }
+    
+    .prose ol {
+      list-style-type: decimal;
+    }
+    
+    .prose li {
+      margin-bottom: 0.5rem;
+      line-height: 1.75;
+      color: #4a5568;
+      display: list-item;
+    }
+    
+    .prose ul ul {
+      list-style-type: circle;
+      margin-top: 0.5rem;
+    }
+    
+    .prose ul ul ul {
+      list-style-type: square;
+    }
+    
+    .prose strong {
+      font-weight: 600;
+      color: #2d3748;
+    }
+    
+    .prose a {
+      color: #3182ce;
+      text-decoration: none;
+    }
+    
+    .prose a:hover {
+      text-decoration: underline;
+    }
+    
+    .prose hr {
+      margin: 2rem 0;
+      border-top: 2px solid #e2e8f0;
+    }
+    
+    .prose code {
+      background-color: #f7fafc;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+      color: #e53e3e;
+    }
+    
+    .prose pre {
+      background-color: #2d3748;
+      color: #f7fafc;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    
+
+    
+    .prose table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+    
+    .prose th, .prose td {
+      border: 1px solid #e2e8f0;
+      padding: 0.75rem;
+      text-align: left;
+    }
+    
+    .prose th {
+      background-color: #f7fafc;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <header class="bg-white shadow-md sticky top-0 z-40">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#home" class="text-2xl font-bold text-gray-900 hover:text-blue-600 transition-colors">Anik Jha</a>
+      <div class="hidden md:flex space-x-8">
+        <a href="#home" class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Home</a>
+        <a href="#experience" class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Experience</a>
+        <a href="#projects" class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Projects</a>
+        <a href="#blog" class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Blog</a>
+        <a href="#photography" class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Photography</a>
+        <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Contact</a>
+      </div>
+      <button id="mobile-menu-btn" class="md:hidden text-gray-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 px-6 py-4">
+      <a href="#home" class="block nav-link text-gray-700 hover:text-blue-600 py-2 font-medium">Home</a>
+      <a href="#experience" class="block nav-link text-gray-700 hover:text-blue-600 py-2 font-medium">Experience</a>
+      <a href="#projects" class="block nav-link text-gray-700 hover:text-blue-600 py-2 font-medium">Projects</a>
+      <a href="#blog" class="block nav-link text-gray-700 hover:text-blue-600 py-2 font-medium">Blog</a>
+      <a href="#photography" class="block nav-link text-gray-700 hover:text-blue-600 py-2 font-medium">Photography</a>
+      <a href="#contact" class="block nav-link text-gray-700 hover:text-blue-600 py-2 font-medium">Contact</a>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 py-8">
+    <section id="home" class="page-section">
+      <div class="min-h-[80vh] flex items-center">
+        <div class="max-w-6xl mx-auto">
+          <div class="flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-3/5">
+              <h1 class="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+                Anik Jha
+              </h1>
+              <p class="text-2xl mt-4 text-blue-600 font-medium">
+                Senior Machine Learning Engineer
+              </p>
+              <p class="text-xl mt-2 text-gray-700">
+                Specializing in Recommender Systems, MLOps & Computer Vision
+              </p>
+              <div class="mt-8 text-gray-700 leading-relaxed space-y-4">
+                <p>
+                  I'm a results-driven ML engineer with <strong>9+ years of industry experience</strong> building production AI/ML systems 
+                  that deliver measurable business impact. My expertise spans deep learning, statistical modeling, and end-to-end MLOps.
+                </p>
+                <p>
+                  Currently at <strong>Rocket Mortgage</strong>, I've developed predictive models that reduced client status calls by 78% 
+                  and automated loan processing pipelines that cut processing time from days to minutes. I also mentor engineers 
+                  transitioning into ML roles and lead cross-functional teams to define technical roadmaps.
+                </p>
+                <p>
+                  Beyond engineering, I express my creativity through <strong>photography</strong> and share my knowledge through 
+                  <strong>in-depth technical writing</strong> on machine learning topics—because the best way to master something 
+                  is to teach it.
+                </p>
+              </div>
+              <div class="mt-10 flex flex-wrap gap-4">
+                <a href="#projects" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-lg hover:shadow-xl">
+                  View My Projects
+                </a>
+                <a href="#experience" class="bg-gray-700 text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors font-medium shadow-lg hover:shadow-xl">
+                  See My Resume
+                </a>
+                <a href="#blog" class="border-2 border-gray-700 text-gray-700 px-8 py-3 rounded-lg hover:bg-gray-700 hover:text-white transition-colors font-medium">
+                  Read My Blog
+                </a>
+              </div>
+            </div>
+            <div class="md:w-2/5 mt-8 md:mt-0">
+              <div class="relative">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full blur-2xl opacity-20"></div>
+                <img src="anik.jpg" alt="Anik Jha" class="relative rounded-full mx-auto shadow-2xl border-4 border-white" width="320" height="320" style="max-width: 320px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="experience" class="page-section hidden">
+      <h2 class="text-3xl font-bold text-center mb-8">Experience & Resume</h2>
+      <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
+        <div id="resume-content" class="prose prose-lg max-w-none"></div>
+        <div class="mt-8 text-center">
+          <a href="anik_jha_resume.pdf" download class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            Download PDF Resume
+          </a>
+        </div>
+      </div>
+    </section>
+    <section id="projects" class="page-section hidden">
+      <h2 class="text-4xl font-bold text-center mb-4">Featured Projects</h2>
+      <p class="text-center text-gray-600 mb-12 text-lg">Real-world ML systems delivering measurable business impact</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        
+        <!-- Project 1: Loan Response Time Predictor -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card" data-project="1">
+          <div class="h-48 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
+            <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-gray-900">Predictive Loan Response Time Model</h3>
+            <p class="text-gray-600 mb-4 leading-relaxed">ML model forecasting loan processing times across lifecycle stages, reducing client status calls by 78%.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">Python</span>
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">XGBoost</span>
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">AWS</span>
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">MLOps</span>
+            </div>
+            <div class="flex items-center text-blue-600 font-medium">
+              Learn More
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2: Document Processing -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card" data-project="2">
+          <div class="h-48 bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
+            <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-gray-900">Cascaded Document Processing System</h3>
+            <p class="text-gray-600 mb-4 leading-relaxed">Computer vision pipeline processing mortgage documents, reducing processing time from days to minutes.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-medium">Python</span>
+              <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-medium">PyTorch</span>
+              <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-medium">Computer Vision</span>
+              <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-medium">OCR</span>
+            </div>
+            <div class="flex items-center text-purple-600 font-medium">
+              Learn More
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3: Loan Queue Optimization -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card" data-project="3">
+          <div class="h-48 bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center">
+            <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-gray-900">Automated Loan Queue Prioritization</h3>
+            <p class="text-gray-600 mb-4 leading-relaxed">ML-powered queue optimization system reducing manual effort by 45% and improving client experience scores by 22%.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Python</span>
+              <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Scikit-learn</span>
+              <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Optimization</span>
+              <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">ETL</span>
+            </div>
+            <div class="flex items-center text-green-600 font-medium">
+              Learn More
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4: Self-Driving Path Prediction -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card" data-project="4">
+          <div class="h-48 bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center">
+            <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+            </svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-gray-900">Autonomous Vehicle Path Prediction</h3>
+            <p class="text-gray-600 mb-4 leading-relaxed">Neural network-based trajectory prediction for adjacent vehicles in self-driving systems with continuous learning paradigm.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">Python</span>
+              <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">TensorFlow</span>
+              <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">Computer Vision</span>
+              <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">Autonomous Systems</span>
+            </div>
+            <div class="flex items-center text-red-600 font-medium">
+              Learn More
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 5: VQA Research -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card" data-project="5">
+          <div class="h-48 bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
+            <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-gray-900">CS-VQA: Visual Question Answering</h3>
+            <p class="text-gray-600 mb-4 leading-relaxed">Research on VQA with compressively sensed images, published at ICIP 2018 and presented at CVPR 2018 workshop.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">Python</span>
+              <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">PyTorch</span>
+              <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">NLP</span>
+              <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">Research</span>
+            </div>
+            <div class="flex items-center text-yellow-700 font-medium">
+              Learn More
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 6: Error Review Automation -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card" data-project="6">
+          <div class="h-48 bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center">
+            <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-gray-900">Error Review Automation Tool</h3>
+            <p class="text-gray-600 mb-4 leading-relaxed">Automated prioritization system reducing daily errors by 75%+ through real-time ML-powered error classification.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-medium">Python</span>
+              <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-medium">Scikit-learn</span>
+              <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-medium">Real-time ML</span>
+              <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-medium">Team Leadership</span>
+            </div>
+            <div class="flex items-center text-indigo-600 font-medium">
+              Learn More
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Project Modal -->
+      <div id="project-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+          <div class="sticky top-0 bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center">
+            <h3 id="modal-title" class="text-2xl font-bold text-gray-900"></h3>
+            <button id="close-modal" class="text-gray-500 hover:text-gray-700 p-2">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+          <div id="modal-content" class="p-8">
+            <!-- Content will be injected here -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <section id="blog" class="page-section hidden">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-4">Technical Blog</h2>
+        <p class="text-center text-gray-600 mb-12 text-lg">In-depth explorations of machine learning concepts and best practices</p>
+        
+        <div id="blog-list">
+          <!-- Blog posts will be rendered here -->
+        </div>
+        <div id="blog-post" class="hidden">
+          <!-- Single blog post will be rendered here -->
+        </div>
+      </div>
+    </section>
+    <section id="photography" class="page-section hidden">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-4">Photography</h2>
+        <p class="text-center text-gray-600 mb-8 text-lg">Capturing the world through my lens — from landscapes to street scenes</p>
+        
+        <div class="text-center mb-12">
+          <p class="text-gray-700 mb-4 text-lg">
+            Preview of my latest work. For the full collection and updates, visit my Instagram.
+          </p>
+          <a href="https://www.instagram.com/we_earthlngs/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 text-white px-8 py-4 rounded-lg hover:opacity-90 hover:scale-105 transition-all font-semibold shadow-xl text-lg">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            View Full Gallery on Instagram @we_earthlngs
+          </a>
+        </div>
+        
+        <div id="instagram-loading" class="text-center py-12">
+          <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <p class="mt-4 text-gray-600">Loading latest photos from Instagram...</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="photo-gallery" style="display: none;">
+          <!-- Photos will be loaded from Instagram -->
+        </div>
+      </div>
+
+      <!-- Lightbox Modal -->
+      <div id="photo-lightbox" class="fixed inset-0 bg-black bg-opacity-95 hidden items-center justify-center z-50">
+        <button id="close-lightbox" class="absolute top-6 right-6 text-white hover:text-gray-300 transition-colors z-10">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+        
+        <button id="prev-photo" class="absolute left-6 text-white hover:text-gray-300 transition-colors z-10">
+          <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        
+        <button id="next-photo" class="absolute right-6 text-white hover:text-gray-300 transition-colors z-10">
+          <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+
+        <div class="max-w-7xl max-h-[90vh] flex items-center justify-center px-20">
+          <img id="lightbox-image" src="" alt="" class="max-w-full max-h-[90vh] object-contain">
+        </div>
+        
+        <div id="photo-caption" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white text-center">
+          <p class="text-lg font-medium"></p>
+          <p class="text-sm text-gray-300 mt-1"></p>
+        </div>
+
+        <div class="absolute top-6 left-1/2 transform -translate-x-1/2 text-white text-sm">
+          <span id="photo-counter"></span>
+        </div>
+      </div>
+    </section>
+    <section id="contact" class="page-section hidden">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-4">Get in Touch</h2>
+        <p class="text-xl text-gray-700 mb-8 leading-relaxed">
+          I'm always open to discussing new projects, creative ideas, or opportunities to contribute to impactful ML initiatives. 
+          Whether you're looking for technical expertise, mentorship, or collaboration—let's connect!
+        </p>
+        
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 mb-12 border border-blue-100">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <a href="https://www.linkedin.com/in/anikjha" target="_blank" class="group bg-white rounded-xl p-6 hover:shadow-lg transition-all">
+              <svg class="w-12 h-12 mx-auto mb-4 text-blue-700 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+              <h3 class="font-bold text-gray-900 mb-1">LinkedIn</h3>
+              <p class="text-sm text-gray-600">Connect professionally</p>
+            </a>
+            
+            <a href="https://github.com/anikjha" target="_blank" class="group bg-white rounded-xl p-6 hover:shadow-lg transition-all">
+              <svg class="w-12 h-12 mx-auto mb-4 text-gray-800 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              <h3 class="font-bold text-gray-900 mb-1">GitHub</h3>
+              <p class="text-sm text-gray-600">View my code</p>
+            </a>
+            
+            <a href="mailto:anik.k.jha@gmail.com" class="group bg-white rounded-xl p-6 hover:shadow-lg transition-all">
+              <svg class="w-12 h-12 mx-auto mb-4 text-red-600 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
+              </svg>
+              <h3 class="font-bold text-gray-900 mb-1">Email</h3>
+              <p class="text-sm text-gray-600">anik.k.jha@gmail.com</p>
+            </a>
+          </div>
+        </div>
+
+        <div class="text-gray-600">
+          <p class="flex items-center justify-center gap-2 mb-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+            </svg>
+            (480) 326-3629
+          </p>
+          <p class="text-sm">Based in Phoenix, AZ • Open to remote opportunities</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-gray-900 text-white py-12 mt-16">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Anik Jha</h3>
+          <p class="text-gray-400 leading-relaxed">
+            Senior ML Engineer passionate about building production AI systems that deliver measurable business impact.
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#home" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+            <li><a href="#experience" class="text-gray-400 hover:text-white transition-colors">Experience</a></li>
+            <li><a href="#projects" class="text-gray-400 hover:text-white transition-colors">Projects</a></li>
+            <li><a href="#blog" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+            <li><a href="#photography" class="text-gray-400 hover:text-white transition-colors">Photography</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Connect</h3>
+          <div class="flex gap-4 mb-4">
+            <a href="https://www.linkedin.com/in/anikjha" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
+            <a href="https://github.com/anikjha" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+            <a href="mailto:anik.k.jha@gmail.com" class="text-gray-400 hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
+              </svg>
+            </a>
+          </div>
+          <p class="text-gray-400 text-sm">anik.k.jha@gmail.com</p>
+          <p class="text-gray-400 text-sm">(480) 326-3629</p>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
+        <p>&copy; 2025 Anik Jha. All Rights Reserved.</p>
+        <p class="mt-2">Built with passion for ML engineering and clean code</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="posts.js"></script>
+  <script>
+    // Project data
+    const projectData = {
+      1: {
+        title: "Predictive Loan Response Time Model",
+        description: "Built a sophisticated machine learning model to forecast loan response times at different lifecycle stages, providing clients with accurate processing time estimates.",
+        impact: [
+          "Reduced client status calls by 78%",
+          "Improved operational transparency across loan processing",
+          "Enhanced client satisfaction through proactive communication"
+        ],
+        technical: "The model uses XGBoost with time-series features, processing historical loan data to predict response times across multiple stages (application, underwriting, closing). Deployed on AWS with automated retraining pipelines and real-time inference via REST API.",
+        tech: ["Python", "XGBoost", "AWS SageMaker", "Docker", "MLflow", "Time-Series Analysis"],
+        github: "#",
+        demo: "#"
+      },
+      2: {
+        title: "Cascaded Document Processing System",
+        description: "Designed an intelligent computer vision pipeline for processing image-based mortgage documents, automatically filtering and extracting relevant information for specific queries.",
+        impact: [
+          "Reduced document processing time from days to minutes",
+          "Automated manual document review workflows",
+          "Improved accuracy through multi-stage validation"
+        ],
+        technical: "The system uses a cascaded architecture: (1) Document classification CNN, (2) OCR with Tesseract/AWS Textract, (3) Named entity recognition, (4) Information extraction with BERT-based models. Each stage filters and refines the data pipeline.",
+        tech: ["Python", "PyTorch", "Computer Vision", "OCR", "BERT", "AWS", "Docker"],
+        github: "#",
+        demo: "#"
+      },
+      3: {
+        title: "Automated Loan Queue Prioritization",
+        description: "Developed ML models to automate loan queue prioritization and predict key mortgage performance metrics, optimizing resource allocation and improving client experience.",
+        impact: [
+          "Reduced manual effort by 45%",
+          "Improved client experience scores by 22%",
+          "Optimized resource allocation across teams"
+        ],
+        technical: "The system combines classification models (loan urgency), regression models (processing time), and optimization algorithms (queue assignment). Features include client history, loan complexity, deadline proximity, and resource availability. Integrated with existing workflow management systems.",
+        tech: ["Python", "Scikit-learn", "LightGBM", "Optimization", "AWS Glue", "ETL Pipelines"],
+        github: "#",
+        demo: "#"
+      },
+      4: {
+        title: "Autonomous Vehicle Path Prediction",
+        description: "Led development of neural network-based methodology to predict trajectories of adjacent vehicles for self-driving systems, enabling safer motion planning decisions.",
+        impact: [
+          "Implemented continuous learning paradigm for real-world interventions",
+          "Enhanced motion planning algorithm with surrounding traffic behavior",
+          "Improved pedestrian behavior classification in urban environments"
+        ],
+        technical: "LSTM-based trajectory prediction with attention mechanisms, trained on real-world driving data. The continuous learning system automatically learns from intervention cases without manual labeling. Integrated with motion planning stack for real-time inference at 30 Hz.",
+        tech: ["Python", "TensorFlow", "LSTM", "Computer Vision", "Sensor Fusion", "ROS"],
+        github: "#",
+        demo: "#"
+      },
+      5: {
+        title: "CS-VQA: Visual Question Answering",
+        description: "Research on Visual Question Answering with compressively sensed images, exploring how to answer natural language questions about images with reduced pixel information.",
+        impact: [
+          "Published at ICIP 2018",
+          "Presented poster at CVPR 2018 VQA Workshop",
+          "Demonstrated VQA feasibility with compressed image representations"
+        ],
+        technical: "The approach uses compressed sensing theory to reduce image dimensions while preserving semantic information needed for VQA. Combined CNN encoders with LSTM question encoders and attention mechanisms for answer prediction. Achieved competitive accuracy with 10× fewer pixels.",
+        tech: ["Python", "PyTorch", "NLP", "Computer Vision", "Attention Mechanisms", "Research"],
+        github: "#",
+        paper: "https://ieeexplore.ieee.org"
+      },
+      6: {
+        title: "Error Review Automation Tool",
+        description: "Led a team of 3 data scientists to design a fully automated tool for prioritizing errors encountered in real-time at Error Review Workstation (ERW).",
+        impact: [
+          "Reduced average daily errors by 75%+",
+          "Automated real-time error prioritization",
+          "Led and mentored team of 3 data scientists"
+        ],
+        technical: "The system uses ensemble models (Random Forest + XGBoost) to classify error severity and predict resolution time. Features include error type, frequency patterns, historical resolution data, and business impact. Real-time scoring API integrated with production systems for instant prioritization.",
+        tech: ["Python", "Scikit-learn", "XGBoost", "Real-time ML", "Team Leadership", "Production Systems"],
+        github: "#",
+        demo: "#"
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const navLinks = document.querySelectorAll('.nav-link');
+      const sections = document.querySelectorAll('.page-section');
+      const blogList = document.getElementById('blog-list');
+      const blogPost = document.getElementById('blog-post');
+      const resumeContent = document.getElementById('resume-content');
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      // Mobile menu toggle
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      // Project modal functionality
+      const projectCards = document.querySelectorAll('.project-card');
+      const projectModal = document.getElementById('project-modal');
+      const closeModal = document.getElementById('close-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalContent = document.getElementById('modal-content');
+
+      projectCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const projectId = card.dataset.project;
+          const project = projectData[projectId];
+          
+          modalTitle.textContent = project.title;
+          modalContent.innerHTML = `
+            <div class="space-y-6">
+              <p class="text-lg text-gray-700 leading-relaxed">${project.description}</p>
+              
+              <div>
+                <h4 class="text-xl font-bold text-gray-900 mb-3">Key Impact</h4>
+                <ul class="space-y-2">
+                  ${project.impact.map(item => `
+                    <li class="flex items-start">
+                      <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      <span class="text-gray-700">${item}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+
+              <div>
+                <h4 class="text-xl font-bold text-gray-900 mb-3">Technical Approach</h4>
+                <p class="text-gray-700 leading-relaxed">${project.technical}</p>
+              </div>
+
+              <div>
+                <h4 class="text-xl font-bold text-gray-900 mb-3">Technologies</h4>
+                <div class="flex flex-wrap gap-2">
+                  ${project.tech.map(tech => `
+                    <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">${tech}</span>
+                  `).join('')}
+                </div>
+              </div>
+
+              ${project.github || project.demo || project.paper ? `
+                <div class="pt-4 border-t border-gray-200 flex gap-4">
+                  ${project.github ? `
+                    <a href="${project.github}" class="inline-flex items-center gap-2 bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-900 transition-colors">
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                      </svg>
+                      View Code
+                    </a>
+                  ` : ''}
+                  ${project.demo ? `
+                    <a href="${project.demo}" class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                      </svg>
+                      View Demo
+                    </a>
+                  ` : ''}
+                  ${project.paper ? `
+                    <a href="${project.paper}" class="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      </svg>
+                      Read Paper
+                    </a>
+                  ` : ''}
+                </div>
+              ` : ''}
+            </div>
+          `;
+          
+          projectModal.classList.remove('hidden');
+          projectModal.classList.add('flex');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      closeModal.addEventListener('click', () => {
+        projectModal.classList.add('hidden');
+        projectModal.classList.remove('flex');
+        document.body.style.overflow = 'auto';
+      });
+
+      projectModal.addEventListener('click', (e) => {
+        if (e.target === projectModal) {
+          projectModal.classList.add('hidden');
+          projectModal.classList.remove('flex');
+          document.body.style.overflow = 'auto';
+        }
+      });
+
+      function showSection(id) {
+        sections.forEach(section => {
+          if (section.id === id) {
+            section.classList.remove('hidden');
+          } else {
+            section.classList.add('hidden');
+          }
+        });
+      }
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = e.target.getAttribute('href').substring(1);
+          window.location.hash = targetId;
+          showSection(targetId);
+          // Close mobile menu when link is clicked
+          mobileMenu.classList.add('hidden');
+        });
+      });
+
+      function renderBlogList() {
+        if (!window.posts || !window.posts.length) {
+          blogList.innerHTML = '<p class="text-gray-600 text-center">No posts found.</p>';
+          return;
+        }
+
+        // Group posts by series (assuming titles contain "Part X" or similar)
+        const seriesInfo = window.posts.map(post => {
+          const match = post.title.match(/Part (\d+)/i);
+          return {
+            ...post,
+            series: match ? 'Quantile Regression Series' : null,
+            part: match ? parseInt(match[1]) : null
+          };
+        });
+
+        blogList.innerHTML = `
+          <div class="mb-12 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
+            <div class="flex items-start gap-4">
+              <div class="bg-blue-600 text-white p-3 rounded-lg">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Featured Series: Mastering Quantile Regression</h3>
+                <p class="text-gray-700 mb-4">A comprehensive 5-part series diving deep into quantile regression—from theory to production deployment. Perfect for ML engineers who want to move beyond point predictions and embrace distributional thinking.</p>
+                <div class="flex items-center gap-2 text-sm text-gray-600">
+                  <span class="bg-white px-3 py-1 rounded-full font-medium">5 Parts</span>
+                  <span class="bg-white px-3 py-1 rounded-full font-medium">~90 min total</span>
+                  <span class="bg-white px-3 py-1 rounded-full font-medium">Intermediate-Advanced</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            ${window.posts.map((post, index) => {
+              // Color schemes for each part
+              const colors = [
+                'from-blue-500 to-cyan-600',
+                'from-purple-500 to-pink-600',
+                'from-green-500 to-emerald-600',
+                'from-orange-500 to-red-600',
+                'from-indigo-500 to-purple-600'
+              ];
+              
+              return `
+                <a href="#blog/${post.slug}" class="blog-post-link group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all cursor-pointer">
+                  <div class="h-48 bg-gradient-to-br ${colors[index % colors.length]} flex items-center justify-center relative overflow-hidden">
+                    <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    <div class="absolute top-4 left-4">
+                      <span class="bg-white text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
+                        Part ${index + 1}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
+                      ${post.title}
+                    </h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">${post.snippet || 'Click to read more...'}</p>
+                    <div class="flex items-center text-blue-600 font-medium">
+                      Read Article
+                      <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+
+      function renderBlogPost(slug) {
+        const post = (window.posts || []).find(p => p.slug === slug);
+        if (post) {
+          const partMatch = post.title.match(/Part (\d+)/i);
+          const partNumber = partMatch ? parseInt(partMatch[1]) : null;
+          
+          blogPost.innerHTML = `
+            <article class="bg-white rounded-xl shadow-lg p-8 md:p-12">
+              <a href="#blog" class="back-to-blog inline-flex items-center text-blue-600 hover:text-blue-700 mb-6 font-medium">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                Back to Blog
+              </a>
+              
+              ${partNumber ? `
+                <div class="mb-4">
+                  <span class="bg-blue-100 text-blue-800 text-sm font-semibold px-4 py-2 rounded-full">
+                    Part ${partNumber} of 5 - Quantile Regression Series
+                  </span>
+                </div>
+              ` : ''}
+              
+              <h1 class="text-4xl md:text-5xl font-bold mt-4 text-gray-900 leading-tight">
+                ${post.title.replace(/Part \d+:/i, '').trim()}
+              </h1>
+              
+              ${post.date ? `
+                <div class="mt-4 flex items-center gap-4 text-gray-600">
+                  <span class="flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    ${post.date}
+                  </span>
+                </div>
+              ` : ''}
+              
+              <div class="mt-8 prose prose-lg prose-blue max-w-none">
+                ${post.content}
+              </div>
+              
+              ${partNumber ? `
+                <div class="mt-12 pt-8 border-t border-gray-200">
+                  <h3 class="text-xl font-bold mb-4">Series Navigation</h3>
+                  <div class="flex gap-4">
+                    ${partNumber > 1 ? `
+                      <a href="#blog/blog${partNumber - 1}-medium" class="flex-1 bg-gray-100 hover:bg-gray-200 rounded-lg p-4 transition-colors">
+                        <div class="text-sm text-gray-600 mb-1">← Previous</div>
+                        <div class="font-semibold text-gray-900">Part ${partNumber - 1}</div>
+                      </a>
+                    ` : '<div class="flex-1"></div>'}
+                    ${partNumber < 5 ? `
+                      <a href="#blog/blog${partNumber + 1}-medium" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg p-4 transition-colors text-right">
+                        <div class="text-sm text-blue-100 mb-1">Next →</div>
+                        <div class="font-semibold">Part ${partNumber + 1}</div>
+                      </a>
+                    ` : '<div class="flex-1"></div>'}
+                  </div>
+                </div>
+              ` : ''}
+            </article>
+          `;
+          blogList.classList.add('hidden');
+          blogPost.classList.remove('hidden');
+          
+          // Apply syntax highlighting and math rendering after rendering
+          setTimeout(() => {
+            // Syntax highlighting
+            document.querySelectorAll('#blog-post pre code').forEach((block) => {
+              if (window.hljs) {
+                hljs.highlightElement(block);
+              }
+            });
+            
+            // Render math with KaTeX
+            if (window.renderMathInElement) {
+              renderMathInElement(document.getElementById('blog-post'), {
+                delimiters: [
+                  {left: '$$', right: '$$', display: true},
+                  {left: '$', right: '$', display: false},
+                  {left: '\\[', right: '\\]', display: true},
+                  {left: '\\(', right: '\\)', display: false}
+                ],
+                throwOnError: false
+              });
+            }
+          }, 100);
+        }
+      }
+
+      function renderResume() {
+        // Try to fetch actual resume from a few common locations, prefer the real `actual_contents` copy
+        const candidates = [
+          'actual_contents/resume.md',
+          'public/actual_contents/resume.md',
+          'public/actual_contents/sample_resume.md'
+        ];
+
+        (async () => {
+          let text = null;
+          for (const url of candidates) {
+            try {
+              const res = await fetch(url);
+              if (res.ok) {
+                text = await res.text();
+                break;
+              }
+            } catch (e) {
+              // ignore and try next
+            }
+          }
+
+          if (!text) {
+            resumeContent.innerHTML = '<p class="text-gray-600">Resume not found.</p>';
+            return;
+          }
+
+          const converter = new showdown.Converter({
+            tables: true,
+            strikethrough: true,
+            ghCodeBlocks: true,
+            tasklists: true,
+            simpleLineBreaks: false,
+            openLinksInNewWindow: true
+          });
+          const html = converter.makeHtml(text);
+          resumeContent.innerHTML = html;
+          
+          // Render math in resume if present
+          setTimeout(() => {
+            if (window.renderMathInElement) {
+              renderMathInElement(resumeContent, {
+                delimiters: [
+                  {left: '$$', right: '$$', display: true},
+                  {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+              });
+            }
+          }, 100);
+        })();
+      }
+
+      document.body.addEventListener('click', (e) => {
+        // Check if clicked element or its parent is a blog-post-link
+        const blogLink = e.target.closest('.blog-post-link');
+        if (blogLink) {
+          e.preventDefault();
+          const href = blogLink.getAttribute('href');
+          const slug = href.split('/')[1];
+          window.location.hash = `blog/${slug}`;
+          showSection('blog');
+          renderBlogPost(slug);
+          window.scrollTo(0, 0);
+          return;
+        }
+        
+        // Handle back to blog link
+        if (e.target.classList.contains('back-to-blog') || e.target.closest('.back-to-blog')) {
+          e.preventDefault();
+          window.location.hash = 'blog';
+          showSection('blog');
+          blogPost.classList.add('hidden');
+          blogList.classList.remove('hidden');
+          window.scrollTo(0, 0);
+          return;
+        }
+        
+        // Handle links within blog content that navigate to other posts
+        const link = e.target.closest('a');
+        if (link && link.getAttribute('href')?.startsWith('#blog/')) {
+          e.preventDefault();
+          const href = link.getAttribute('href');
+          const slug = href.split('/')[1];
+          window.location.hash = `blog/${slug}`;
+          showSection('blog');
+          renderBlogPost(slug);
+          window.scrollTo(0, 0);
+          return;
+        }
+      });
+
+      // Wait until posts are loaded (posts.js sets window.postsReady)
+      if (window.postsReady) {
+        await window.postsReady;
+        console.log('Posts loaded:', window.posts);
+      } else {
+        console.warn('window.postsReady not found - posts may not load');
+      }
+
+      const currentHash = window.location.hash.substring(1);
+      if (currentHash.startsWith('blog/')) {
+        const slug = currentHash.split('/')[1];
+        showSection('blog');
+        renderBlogPost(slug);
+      } else if (currentHash) {
+        showSection(currentHash);
+      } else {
+        showSection('home');
+      }
+
+      renderBlogList();
+      renderResume();
+      
+      // Render math in blog list after it loads
+      setTimeout(() => {
+        if (window.renderMathInElement && blogList) {
+          renderMathInElement(blogList, {
+            delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+          });
+        }
+      }, 500);
+
+      // Photography gallery - Load from local Instagram images
+      const photoGallery = document.getElementById('photo-gallery');
+      const instagramLoading = document.getElementById('instagram-loading');
+      const photoLightbox = document.getElementById('photo-lightbox');
+      const lightboxImage = document.getElementById('lightbox-image');
+      const photoCaption = document.getElementById('photo-caption');
+      const photoCounter = document.getElementById('photo-counter');
+      const closeLightbox = document.getElementById('close-lightbox');
+      const prevPhoto = document.getElementById('prev-photo');
+      const nextPhoto = document.getElementById('next-photo');
+      let currentPhotoIndex = 0;
+      
+      // Your Instagram photos - organized for visual appeal
+      let photos = [
+        { src: 'assets/insta_images/Screenshot from 2025-11-15 21-20-05.png', caption: 'From @we_earthlngs' },
+        { src: 'assets/insta_images/Screenshot from 2025-11-15 21-21-44.png', caption: 'From @we_earthlngs' },
+        { src: 'assets/insta_images/Screenshot from 2025-11-15 21-24-31.png', caption: 'From @we_earthlngs' },
+        { src: 'assets/insta_images/Screenshot from 2025-11-15 21-34-44.png', caption: 'From @we_earthlngs' },
+        { src: 'assets/insta_images/Screenshot from 2025-11-15 21-25-25.png', caption: 'From @we_earthlngs' },
+        { src: 'assets/insta_images/Screenshot from 2025-11-15 21-26-11.png', caption: 'From @we_earthlngs' },
+        { src: 'assets/insta_images/Screenshot from 2025-11-15 21-27-03.png', caption: 'From @we_earthlngs' },
+        { src: 'assets/insta_images/Screenshot from 2025-11-15 21-27-38.png', caption: 'From @we_earthlngs' },
+        { src: 'assets/insta_images/Screenshot from 2025-11-15 21-28-03.png', caption: 'From @we_earthlngs' },
+        { src: 'assets/insta_images/Screenshot from 2025-11-15 21-28-45.png', caption: 'From @we_earthlngs' }
+      ];
+
+      // Render gallery with beautiful layout
+      function renderGallery() {
+        instagramLoading.style.display = 'none';
+        photoGallery.style.display = 'grid';
+        
+        photoGallery.innerHTML = photos.map((photo, index) => `
+          <div class="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer aspect-square photo-item transform hover:-translate-y-1" data-index="${index}">
+            <img src="${photo.src}" alt="${photo.caption}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/667eea/ffffff?text=Photo+${index + 1}'">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+              <div class="flex items-center gap-2 text-white">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+                </svg>
+                <p class="text-sm font-medium">View Full Size</p>
+              </div>
+            </div>
+            <div class="absolute top-3 left-3 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              @we_earthlngs
+            </div>
+          </div>
+        `).join('');
+        
+        // Add click listeners to photos
+        document.querySelectorAll('.photo-item').forEach(item => {
+          item.addEventListener('click', () => {
+            currentPhotoIndex = parseInt(item.dataset.index);
+            showPhoto(currentPhotoIndex);
+            photoLightbox.classList.remove('hidden');
+            photoLightbox.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+          });
+        });
+      }
+
+      // Load gallery immediately
+      renderGallery();
+
+      function showPhoto(index) {
+        const photo = photos[index];
+        lightboxImage.src = photo.src;
+        lightboxImage.alt = photo.caption || 'Instagram Photo';
+        photoCaption.querySelector('p:first-child').textContent = photo.caption?.substring(0, 100) || 'View on Instagram';
+        photoCaption.querySelector('p:last-child').textContent = photo.permalink ? 'Click to view on Instagram' : (photo.location || '');
+        photoCounter.textContent = `${index + 1} / ${photos.length}`;
+      }
+
+      // Close lightbox
+      closeLightbox.addEventListener('click', () => {
+        photoLightbox.classList.add('hidden');
+        photoLightbox.classList.remove('flex');
+        document.body.style.overflow = 'auto';
+      });
+
+      // Navigation
+      prevPhoto.addEventListener('click', () => {
+        currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
+        showPhoto(currentPhotoIndex);
+      });
+
+      nextPhoto.addEventListener('click', () => {
+        currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+        showPhoto(currentPhotoIndex);
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (!photoLightbox.classList.contains('hidden')) {
+          if (e.key === 'Escape') {
+            photoLightbox.classList.add('hidden');
+            photoLightbox.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+          } else if (e.key === 'ArrowLeft') {
+            currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
+            showPhoto(currentPhotoIndex);
+          } else if (e.key === 'ArrowRight') {
+            currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+            showPhoto(currentPhotoIndex);
+          }
+        }
+      });
+
+      // Click outside to close
+      photoLightbox.addEventListener('click', (e) => {
+        if (e.target === photoLightbox) {
+          photoLightbox.classList.add('hidden');
+          photoLightbox.classList.remove('flex');
+          document.body.style.overflow = 'auto';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

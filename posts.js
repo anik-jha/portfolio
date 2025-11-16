@@ -158,11 +158,8 @@ window.postsReady = (async () => {
         return placeholder;
       });
       
-      // Convert legacy $...$ inline math to \(...\), excluding currency like $1.2M
-      contentText = contentText.replace(/\$([^\$\n]+?)\$/g, (match, inner) => {
-        if (/^\d+(?:\.\d+)?(?:[KMB])?$/.test(inner)) {
-          return match; // leave currency as-is
-        }
+      // Protect inline math with LaTeX commands ($\text{...}$, $\beta$, etc) - for backward compatibility
+      contentText = contentText.replace(/\$([^\$\n]*?[\\{}_^][^\$\n]*?)\$/g, (match, inner) => {
         const placeholder = `XXXXXMATHINLINEXXXXX${mathCounter}XXXXXMATHINLINEXXXXX`;
         mathPlaceholders.push({ placeholder, content: `\\(${inner}\\)` });
         mathCounter++;

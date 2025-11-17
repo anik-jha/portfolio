@@ -1,5 +1,6 @@
 <div style="display: flex; justify-content: space-between; align-items: baseline; width: 100%;">
-    <div style="text-align: center;"><span style="font-size: 24px;"><b>Anik Jha</b></span> <a href="https://www.linkedin.com/">in</a></div>
+    <div style="text-align: left;">              </div>
+    <div style="text-align: center;"><span style="font-size: 24px;"><b>Anik Jha</b></span> <a href="https://www.linkedin.com/in/anik-jha">in</a></div>
     <div style="text-align: right;"><a href="mailto:anik.k.jha@gmail.com">anik.k.jha@gmail.com</a></div>
 </div>
 

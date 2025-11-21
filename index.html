@@ -1054,20 +1054,13 @@
           const isLLMSeries = post.slug.includes('llm-components');
 
           let seriesInfo = null;
-          if (partNumber) {
-            if (isQRSeries) {
-              seriesInfo = {
-                name: 'Quantile Regression Series',
-                total: 5,
-                color: 'blue'
-              };
-            } else if (isLLMSeries) {
-              seriesInfo = {
-                name: 'LLM Components Series',
-                total: 2,
-                color: 'rose'
-              };
-            }
+          // Only show series navigation for Quantile Regression series (not for LLM Components)
+          if (partNumber && isQRSeries) {
+            seriesInfo = {
+              name: 'Quantile Regression Series',
+              total: 5,
+              color: 'blue'
+            };
           }
 
           // Update browser tab title
@@ -1109,7 +1102,7 @@
                 ${post.content}
               </div>
               
-              ${partNumber ? `
+              ${seriesInfo ? `
                 <div class="mt-12 pt-8 border-t border-gray-200">
                   <h3 class="text-xl font-bold mb-4">Series Navigation</h3>
                   <div class="flex gap-4">

@@ -7,16 +7,18 @@ window.postsReady = (async () => {
     'quantile_regression/blog2_medium.md',
     'quantile_regression/blog3_medium.md',
     'quantile_regression/blog4_medium.md',
-    'quantile_regression/blog5_medium.md'
+    'quantile_regression/blog5_medium.md',
+    'llm_components/llm_components_part1.md'
   ];
-  
+
   // Custom snippets for each blog post
   const customSnippets = {
     'blog1-medium': 'Your model predicts the average. Great! But averages are for trivia night, not for decisions with consequences. Learn why quantile regression is essential for high-stakes ML.',
     'blog2-medium': 'Why does asymmetric loss lead to quantile predictions? Dive deep into the pinball loss function and understand the mathematical engine powering quantile regression.',
     'blog3-medium': 'Build your first quantile regression model in Python. Step-by-step implementation with statsmodels, complete with evaluation metrics and real-world examples.',
     'blog4-medium': 'Scale quantile regression to non-linear patterns with gradient boosting. Learn LightGBM and XGBoost techniques for production-grade probabilistic forecasting.',
-    'blog5-medium': 'Master state-of-the-art techniques including conformal prediction, distributional regression, and neural network approaches for robust uncertainty quantification in production.'
+    'blog5-medium': 'Master state-of-the-art techniques including conformal prediction, distributional regression, and neural network approaches for robust uncertainty quantification in production.',
+    'llm-components-part1': 'A comprehensive guide to understanding transformers from the ground up. Learn tokenization, embeddings, positional encoding, and the architecture that powers modern LLMs like GPT and Claude.'
   };
   const pathCandidates = ['actual_contents/', 'public/actual_contents/'];
 
@@ -133,7 +135,7 @@ window.postsReady = (async () => {
       // Protect math expressions before markdown conversion
       const mathPlaceholders = [];
       let mathCounter = 0;
-      
+
       // Protect display math ($$...$$) FIRST - highest priority
       contentText = contentText.replace(/\$\$([\s\S]*?)\$\$/g, (match) => {
         const placeholder = `XXXXXMATHDISPLAYXXXXX${mathCounter}XXXXXMATHDISPLAYXXXXX`;
@@ -141,7 +143,7 @@ window.postsReady = (async () => {
         mathCounter++;
         return placeholder;
       });
-      
+
       // Protect \[...\] display math
       contentText = contentText.replace(/\\\[([\s\S]*?)\\\]/g, (match) => {
         const placeholder = `XXXXXMATHDISPLAYXXXXX${mathCounter}XXXXXMATHDISPLAYXXXXX`;
@@ -149,7 +151,7 @@ window.postsReady = (async () => {
         mathCounter++;
         return placeholder;
       });
-      
+
       // Protect \(...\) inline math - THIS IS CRITICAL
       contentText = contentText.replace(/\\\(([\s\S]*?)\\\)/g, (match) => {
         const placeholder = `XXXXXMATHINLINEXXXXX${mathCounter}XXXXXMATHINLINEXXXXX`;
@@ -157,7 +159,7 @@ window.postsReady = (async () => {
         mathCounter++;
         return placeholder;
       });
-      
+
       // Protect inline math with LaTeX commands ($\text{...}$, $\beta$, etc) - for backward compatibility
       contentText = contentText.replace(/\$([^\$\n]*?[\\{}_^][^\$\n]*?)\$/g, (match, inner) => {
         const placeholder = `XXXXXMATHINLINEXXXXX${mathCounter}XXXXXMATHINLINEXXXXX`;
@@ -165,23 +167,26 @@ window.postsReady = (async () => {
         mathCounter++;
         return placeholder;
       });
-      
+
       // Now protect currency dollar signs (like $1.2M, $800K, $10M)
       contentText = contentText.replace(/\$(\d+(?:\.\d+)?[KMB]?)\b/g, (match, amount) => {
         // Just keep the dollar sign as-is since KaTeX won't treat single $ as delimiter anymore
         return match;
       });
-      
+
       let content = converter.makeHtml(contentText);
-      
+
       // Restore math expressions (replace all occurrences)
-      mathPlaceholders.forEach(({placeholder, content: mathContent}) => {
+      mathPlaceholders.forEach(({ placeholder, content: mathContent }) => {
         content = content.split(placeholder).join(mathContent);
       });
-      
-      // Fix image paths: replace assets/ with correct path to quantile_regression assets folder
-      content = content.replace(/<img([^>]+)src="\.\.\/assets\/([^"]+)"([^>]*)>/g, '<img$1src="actual_contents/quantile_regression/assets/$2"$3>');
-      content = content.replace(/<img([^>]+)src="assets\/([^"]+)"([^>]*)>/g, '<img$1src="actual_contents/quantile_regression/assets/$2"$3>');
+
+      // Fix image paths: detect which series folder we're in from the file path
+      const seriesFolder = file.split('/')[0]; // e.g., 'quantile_regression' or 'llm_components'
+      content = content.replace(/\<img([^\>]+)src="\.\.\/assets\/([^"]+)"([^\>]*)\>/g, `<img$1src="actual_contents/${seriesFolder}/assets/$2"$3>`);
+      content = content.replace(/\<img([^\>]+)src="assets\/([^"]+)"([^\>]*)\>/g, `<img$1src="actual_contents/${seriesFolder}/assets/$2"$3>`);
+      // Also handle direct image references without assets/ prefix
+      content = content.replace(/\<img([^\>]+)src="([^"/:]+\.(png|jpg|jpeg|gif|svg))"([^\>]*)\>/g, `<img$1src="actual_contents/${seriesFolder}/$2"$4>`);
 
       window.posts.push({ slug, title, date, snippet, content });
     } catch (err) {
@@ -198,7 +203,7 @@ window.postsReady = (async () => {
     }
     return a.title.localeCompare(b.title);
   });
-  
+
   console.log('Blog posts loaded successfully:', window.posts.length, 'posts');
   window.posts.forEach(p => console.log(' -', p.title, '(slug:', p.slug + ')'));
 })();

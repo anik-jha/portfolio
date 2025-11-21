@@ -172,9 +172,9 @@ In many domains, under-predicting and over-predicting have different costs:
 
 | Domain | Under-prediction cost | Over-prediction cost | Optimal τ |
 |--------|----------------------|---------------------|----------|
-| **Server capacity** | Outage ($$$) | Wasted resources ($) | 0.9–0.95 |
-| **Inventory (perishable)** | Lost sales ($$) | Spoilage ($$$$) | 0.2–0.3 |
-| **Medical screening** | Missed diagnosis (life) | Unnecessary test ($) | 0.9–0.99 |
+| **Server capacity** | Outage (💰💰💰) | Wasted resources (💰) | 0.9–0.95 |
+| **Inventory (perishable)** | Lost sales (💰💰) | Spoilage (💰💰💰💰) | 0.2–0.3 |
+| **Medical screening** | Missed diagnosis (life) | Unnecessary test (💰) | 0.9–0.99 |
 
 QR lets you *encode these costs* into τ. OLS doesn't.
 

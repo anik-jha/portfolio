@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,15 +15,21 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <!-- Mermaid.js for diagrams -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: false }); // Don't auto-start, we'll trigger manually
+    window.mermaid = mermaid; // Expose globally
+  </script>
   <style>
     html {
       scroll-behavior: smooth;
     }
-    
+
     .prose {
       max-width: 100%;
     }
-    
+
     .prose h1 {
       font-size: 2.5rem;
       font-weight: 700;
@@ -30,7 +37,7 @@
       margin-bottom: 1rem;
       color: #1a202c;
     }
-    
+
     .prose h2 {
       font-size: 2rem;
       font-weight: 700;
@@ -38,7 +45,7 @@
       margin-bottom: 1rem;
       color: #2d3748;
     }
-    
+
     .prose h3 {
       font-size: 1.5rem;
       font-weight: 600;
@@ -46,58 +53,59 @@
       margin-bottom: 0.75rem;
       color: #2d3748;
     }
-    
+
     .prose p {
       margin-bottom: 1rem;
       line-height: 1.75;
       color: #4a5568;
     }
-    
-    .prose ul, .prose ol {
+
+    .prose ul,
+    .prose ol {
       margin-bottom: 1rem;
       padding-left: 2rem;
       list-style-type: disc;
     }
-    
+
     .prose ol {
       list-style-type: decimal;
     }
-    
+
     .prose li {
       margin-bottom: 0.5rem;
       line-height: 1.75;
       color: #4a5568;
       display: list-item;
     }
-    
+
     .prose ul ul {
       list-style-type: circle;
       margin-top: 0.5rem;
     }
-    
+
     .prose ul ul ul {
       list-style-type: square;
     }
-    
+
     .prose strong {
       font-weight: 600;
       color: #2d3748;
     }
-    
+
     .prose a {
       color: #3182ce;
       text-decoration: none;
     }
-    
+
     .prose a:hover {
       text-decoration: underline;
     }
-    
+
     .prose hr {
       margin: 2rem 0;
       border-top: 2px solid #e2e8f0;
     }
-    
+
     .prose code {
       background-color: #f7fafc;
       padding: 0.2rem 0.4rem;
@@ -105,7 +113,7 @@
       font-size: 0.875rem;
       color: #e53e3e;
     }
-    
+
     .prose pre {
       background-color: #2d3748;
       color: #f7fafc;
@@ -114,27 +122,40 @@
       overflow-x: auto;
       margin: 1rem 0;
     }
-    
 
-    
+
+
     .prose table {
       width: 100%;
       border-collapse: collapse;
       margin: 1.5rem 0;
     }
-    
-    .prose th, .prose td {
+
+    .prose th,
+    .prose td {
       border: 1px solid #e2e8f0;
       padding: 0.75rem;
       text-align: left;
     }
-    
+
     .prose th {
       background-color: #f7fafc;
       font-weight: 600;
     }
+
+    /* Mermaid diagram styling */
+    .prose .mermaid {
+      display: flex;
+      justify-content: center;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      margin: 2rem auto;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
   </style>
 </head>
+
 <body class="bg-gray-100 text-gray-800">
 
   <header class="bg-white shadow-md sticky top-0 z-40">
@@ -143,9 +164,11 @@
       <div class="hidden md:flex space-x-8">
         <a href="#home" class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Home</a>
         <!-- <a href="#experience" class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Experience</a> -->
-        <a href="#projects" class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Projects</a>
+        <a href="#projects"
+          class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Projects</a>
         <a href="#blog" class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Blog</a>
-        <a href="#photography" class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Photography</a>
+        <a href="#photography"
+          class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Photography</a>
         <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 transition-colors font-medium">Contact</a>
       </div>
       <button id="mobile-menu-btn" class="md:hidden text-gray-700">
@@ -181,29 +204,41 @@
               </p>
               <div class="mt-8 text-gray-700 leading-relaxed space-y-4">
                 <p>
-                  I'm a results-driven ML engineer with <strong>10 years of industry experience</strong> building production AI/ML systems 
-                  that deliver measurable business impact. My expertise spans deep learning, statistical modeling, and end-to-end MLOps. I also mentor engineers 
+                  I'm a results-driven ML engineer with <strong>10 years of industry experience</strong> building
+                  production AI/ML systems
+                  that deliver measurable business impact. My expertise spans deep learning, statistical modeling, and
+                  end-to-end MLOps. I also mentor engineers
                   transitioning into ML roles and lead cross-functional teams to define technical roadmaps.
                 </p>
                 <p>
-                  Beyond engineering, I express my creativity through <strong>photography</strong> and share my knowledge through 
-                  <strong>in-depth technical writing</strong> on machine learning topics—because the best way to master something 
+                  Beyond engineering, I express my creativity through <strong>photography</strong> and share my
+                  knowledge through
+                  <strong>in-depth technical writing</strong> on machine learning topics—because the best way to master
+                  something
                   is to teach it.
                 </p>
               </div>
               <div class="mt-10 flex flex-wrap gap-4">
-                <a href="#projects" class="home-nav-btn border-2 border-gray-700 text-gray-700 px-8 py-3 rounded-lg hover:bg-blue-700 hover:text-white transition-colors font-medium shadow-lg hover:shadow-xl" data-target="projects">
+                <a href="#projects"
+                  class="home-nav-btn border-2 border-gray-700 text-gray-700 px-8 py-3 rounded-lg hover:bg-blue-700 hover:text-white transition-colors font-medium shadow-lg hover:shadow-xl"
+                  data-target="projects">
                   View My Projects
                 </a>
-                <a href="#blog" class="home-nav-btn border-2 border-gray-700 text-gray-700 px-8 py-3 rounded-lg hover:bg-blue-700 hover:text-white transition-colors font-medium" data-target="blog">
+                <a href="#blog"
+                  class="home-nav-btn border-2 border-gray-700 text-gray-700 px-8 py-3 rounded-lg hover:bg-blue-700 hover:text-white transition-colors font-medium"
+                  data-target="blog">
                   Read My Blogs
                 </a>
               </div>
             </div>
             <div class="md:w-2/5 mt-8 md:mt-0">
               <div class="relative">
-                <div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full blur-2xl opacity-20"></div>
-                <img src="anik.jpg" alt="Anik Jha" class="relative rounded-full mx-auto shadow-2xl border-4 border-white" width="320" height="320" style="max-width: 320px;">
+                <div
+                  class="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full blur-2xl opacity-20">
+                </div>
+                <img src="anik.jpg" alt="Anik Jha"
+                  class="relative rounded-full mx-auto shadow-2xl border-4 border-white" width="320" height="320"
+                  style="max-width: 320px;">
               </div>
             </div>
           </div>
@@ -228,21 +263,27 @@
       <h2 class="text-4xl font-bold text-center mb-4">Featured Projects</h2>
       <p class="text-center text-gray-600 mb-12 text-lg">Real-world ML systems delivering measurable business impact</p>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-        
+
         <!-- Project 1: Loan Response Time Predictor -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card" data-project="1">
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card"
+          data-project="1">
           <div class="h-48 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
             <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+              </path>
             </svg>
           </div>
           <div class="p-6">
             <h3 class="text-xl font-bold mb-2 text-gray-900">Predictive Loan Response Time Model</h3>
-            <p class="text-gray-600 mb-4 leading-relaxed">ML model forecasting loan processing times across lifecycle stages, reducing client status calls by 78%.</p>
+            <p class="text-gray-600 mb-4 leading-relaxed">ML model forecasting loan processing times across lifecycle
+              stages, reducing client status calls by 78%.</p>
             <div class="flex flex-wrap gap-2 mb-4">
               <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">Python</span>
               <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">XGBoost</span>
-              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">Quantile Regression</span>
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">Quantile
+                Regression</span>
               <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">AWS</span>
               <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">MLOps</span>
             </div>
@@ -256,15 +297,20 @@
         </div>
 
         <!-- Project 2: DTemplate Project -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card" data-project="2">
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card"
+          data-project="2">
           <div class="h-48 bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
             <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+              </path>
             </svg>
           </div>
           <div class="p-6">
             <h3 class="text-xl font-bold mb-2 text-gray-900">Standardized MLOps Project Framework</h3>
-            <p class="text-gray-600 mb-4 leading-relaxed"> Standardized MLOps framework, creating a 'golden path' to production.</p>
+            <p class="text-gray-600 mb-4 leading-relaxed"> Standardized MLOps framework, creating a 'golden path' to
+              production.</p>
             <div class="flex flex-wrap gap-2 mb-4">
               <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-medium">Python</span>
               <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-medium">Cookiecutter</span>
@@ -281,21 +327,27 @@
         </div>
 
         <!-- Project 3: Loan Queue Optimization -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card" data-project="3">
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card"
+          data-project="3">
           <div class="h-48 bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center">
             <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z">
+              </path>
             </svg>
           </div>
           <div class="p-6">
             <h3 class="text-xl font-bold mb-2 text-gray-900">Automated Loan Queue Prioritization</h3>
-            <p class="text-gray-600 mb-4 leading-relaxed">ML-powered loan prioritization workflow reducing manual effort by 80%.</p>
+            <p class="text-gray-600 mb-4 leading-relaxed">ML-powered loan prioritization workflow reducing manual effort
+              by 80%.</p>
             <div class="flex flex-wrap gap-2 mb-4">
               <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Python</span>
               <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Streamlit</span>
               <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">AWS</span>
-              <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Learning to Rank</span>
-              <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Human In The Loop Interface</span>
+              <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Learning to
+                Rank</span>
+              <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Human In The Loop
+                Interface</span>
             </div>
             <div class="flex items-center text-green-600 font-medium">
               Learn More
@@ -307,15 +359,19 @@
         </div>
 
         <!-- Project 4: Self-Driving Path Prediction -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card" data-project="4">
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card"
+          data-project="4">
           <div class="h-48 bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center">
             <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l4-4 4 4m0 6l-4 4-4-4">
+              </path>
             </svg>
           </div>
           <div class="p-6">
             <h3 class="text-xl font-bold mb-2 text-gray-900">Continuous Learning System for AV Path Prediction</h3>
-            <p class="text-gray-600 mb-4 leading-relaxed">continuous learning paradigm for path prediction model to learn from cases on the road resulting in interventions.</p>
+            <p class="text-gray-600 mb-4 leading-relaxed">continuous learning paradigm for path prediction model to
+              learn from cases on the road resulting in interventions.</p>
             <div class="flex flex-wrap gap-2 mb-4">
               <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">Python</span>
               <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">TensorFlow</span>
@@ -332,15 +388,20 @@
         </div>
 
         <!-- Project 5: VQA Research -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card" data-project="5">
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card"
+          data-project="5">
           <div class="h-48 bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
             <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+              </path>
             </svg>
           </div>
           <div class="p-6">
             <h3 class="text-xl font-bold mb-2 text-gray-900">CS-VQA: Visual Question Answering</h3>
-            <p class="text-gray-600 mb-4 leading-relaxed">Research on VQA with compressively sensed images, published at ICIP 2018 and presented at CVPR 2018 workshop.</p>
+            <p class="text-gray-600 mb-4 leading-relaxed">Research on VQA with compressively sensed images, published at
+              ICIP 2018 and presented at CVPR 2018 workshop.</p>
             <div class="flex flex-wrap gap-2 mb-4">
               <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">Python</span>
               <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">PyTorch</span>
@@ -357,20 +418,25 @@
         </div>
 
         <!-- Project 6: Error Review Automation -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card" data-project="6">
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer project-card"
+          data-project="6">
           <div class="h-48 bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center">
             <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
           <div class="p-6">
             <h3 class="text-xl font-bold mb-2 text-gray-900">Error Review Automation Tool</h3>
-            <p class="text-gray-600 mb-4 leading-relaxed">Automated prioritization system reducing daily errors by 75% through ML-powered error classification system.</p>
+            <p class="text-gray-600 mb-4 leading-relaxed">Automated prioritization system reducing daily errors by 75%
+              through ML-powered error classification system.</p>
             <div class="flex flex-wrap gap-2 mb-4">
               <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-medium">Python</span>
               <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-medium">Scikit-learn</span>
               <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-medium">Real-time ML</span>
-              <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-medium">Team Leadership</span>
+              <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-medium">Team
+                Leadership</span>
             </div>
             <div class="flex items-center text-indigo-600 font-medium">
               Learn More
@@ -404,8 +470,9 @@
     <section id="blog" class="page-section hidden">
       <div class="max-w-5xl mx-auto">
         <h2 class="text-4xl font-bold text-center mb-4">Technical Blogs</h2>
-        <p class="text-center text-gray-600 mb-12 text-lg">In-depth explorations of machine learning concepts and best practices</p>
-        
+        <p class="text-center text-gray-600 mb-12 text-lg">In-depth explorations of machine learning concepts and best
+          practices</p>
+
         <div id="blog-list">
           <!-- Blog posts will be rendered here -->
         </div>
@@ -417,25 +484,28 @@
     <section id="photography" class="page-section hidden">
       <div class="max-w-7xl mx-auto">
         <h2 class="text-4xl font-bold text-center mb-4">Photography</h2>
-        <p class="text-center text-gray-600 mb-8 text-lg">Capturing the world through my lens — from landscapes to street scenes</p>
-        
+        <p class="text-center text-gray-600 mb-8 text-lg">Capturing the world through my lens — from landscapes to
+          street scenes</p>
+
         <div class="text-center mb-12">
           <p class="text-gray-700 mb-4 text-lg">
             Preview of my latest work. For the full collection and updates, visit my Instagram.
           </p>
-          <a href="https://www.instagram.com/we_earthlngs/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 text-white px-8 py-4 rounded-lg hover:opacity-90 hover:scale-105 transition-all font-semibold shadow-xl text-lg">
+          <a href="https://www.instagram.com/we_earthlngs/" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 text-white px-8 py-4 rounded-lg hover:opacity-90 hover:scale-105 transition-all font-semibold shadow-xl text-lg">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
             </svg>
             View Full Gallery on Instagram @we_earthlngs
           </a>
         </div>
-        
+
         <div id="instagram-loading" class="text-center py-12">
           <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
           <p class="mt-4 text-gray-600">Loading latest photos from Instagram...</p>
         </div>
-        
+
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="photo-gallery" style="display: none;">
           <!-- Photos will be loaded from Instagram -->
         </div>
@@ -443,18 +513,19 @@
 
       <!-- Lightbox Modal -->
       <div id="photo-lightbox" class="fixed inset-0 bg-black bg-opacity-95 hidden items-center justify-center z-50">
-        <button id="close-lightbox" class="absolute top-6 right-6 text-white hover:text-gray-300 transition-colors z-10">
+        <button id="close-lightbox"
+          class="absolute top-6 right-6 text-white hover:text-gray-300 transition-colors z-10">
           <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
-        
+
         <button id="prev-photo" class="absolute left-6 text-white hover:text-gray-300 transition-colors z-10">
           <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
           </svg>
         </button>
-        
+
         <button id="next-photo" class="absolute right-6 text-white hover:text-gray-300 transition-colors z-10">
           <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -464,7 +535,7 @@
         <div class="max-w-7xl max-h-[90vh] flex items-center justify-center px-20">
           <img id="lightbox-image" src="" alt="" class="max-w-full max-h-[90vh] object-contain">
         </div>
-        
+
         <div id="photo-caption" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white text-center">
           <p class="text-lg font-medium"></p>
           <p class="text-sm text-gray-300 mt-1"></p>
@@ -479,31 +550,40 @@
       <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-4xl font-bold mb-4">Get in Touch</h2>
         <p class="text-xl text-gray-700 mb-8 leading-relaxed">
-          I'm always open to discussing new projects, creative ideas, or opportunities to contribute to impactful ML initiatives. 
+          I'm always open to discussing new projects, creative ideas, or opportunities to contribute to impactful ML
+          initiatives.
           Whether you're looking for technical expertise, mentorship, or collaboration—let's connect!
         </p>
-        
+
         <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 mb-12 border border-blue-100">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a href="https://www.linkedin.com/in/anik-jha" target="_blank" class="group bg-white rounded-xl p-6 hover:shadow-lg transition-all">
-              <svg class="w-12 h-12 mx-auto mb-4 text-blue-700 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            <a href="https://www.linkedin.com/in/anik-jha" target="_blank"
+              class="group bg-white rounded-xl p-6 hover:shadow-lg transition-all">
+              <svg class="w-12 h-12 mx-auto mb-4 text-blue-700 group-hover:scale-110 transition-transform"
+                fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
               </svg>
               <h3 class="font-bold text-gray-900 mb-1">LinkedIn</h3>
               <p class="text-sm text-gray-600">Connect professionally</p>
             </a>
-            
-            <a href="https://github.com/anik-jha" target="_blank" class="group bg-white rounded-xl p-6 hover:shadow-lg transition-all">
-              <svg class="w-12 h-12 mx-auto mb-4 text-gray-800 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+
+            <a href="https://github.com/anik-jha" target="_blank"
+              class="group bg-white rounded-xl p-6 hover:shadow-lg transition-all">
+              <svg class="w-12 h-12 mx-auto mb-4 text-gray-800 group-hover:scale-110 transition-transform"
+                fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
               </svg>
               <h3 class="font-bold text-gray-900 mb-1">GitHub</h3>
               <p class="text-sm text-gray-600">View my code</p>
             </a>
-            
+
             <a href="mailto:anik.k.jha@gmail.com" class="group bg-white rounded-xl p-6 hover:shadow-lg transition-all">
-              <svg class="w-12 h-12 mx-auto mb-4 text-red-600 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
+              <svg class="w-12 h-12 mx-auto mb-4 text-red-600 group-hover:scale-110 transition-transform"
+                fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z" />
               </svg>
               <h3 class="font-bold text-gray-900 mb-1">Email</h3>
               <p class="text-sm text-gray-600">anik.k.jha@gmail.com</p>
@@ -514,9 +594,11 @@
         <div class="text-gray-600">
           <p class="flex items-center justify-center gap-2 mb-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+              </path>
             </svg>
-            
+
           </p>
           <p class="text-sm">Based in Phoenix, AZ</p>
         </div>
@@ -533,7 +615,7 @@
             Senior ML Engineer passionate about building production AI systems that deliver measurable business impact.
           </p>
         </div>
-        
+
         <div>
           <h3 class="text-lg font-bold mb-4">Quick Links</h3>
           <ul class="space-y-2">
@@ -544,30 +626,35 @@
             <li><a href="#photography" class="text-gray-400 hover:text-white transition-colors">Photography</a></li>
           </ul>
         </div>
-        
+
         <div>
           <h3 class="text-lg font-bold mb-4">Connect</h3>
           <div class="flex gap-4 mb-4">
-            <a href="https://www.linkedin.com/in/anik-jha" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+            <a href="https://www.linkedin.com/in/anik-jha" target="_blank"
+              class="text-gray-400 hover:text-white transition-colors">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                <path
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
               </svg>
             </a>
-            <a href="https://github.com/anik-jha" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+            <a href="https://github.com/anik-jha" target="_blank"
+              class="text-gray-400 hover:text-white transition-colors">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
               </svg>
             </a>
             <a href="mailto:anik.k.jha@gmail.com" class="text-gray-400 hover:text-white transition-colors">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
+                <path
+                  d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z" />
               </svg>
             </a>
           </div>
           <p class="text-gray-400 text-sm">anik.k.jha@gmail.com</p>
         </div>
       </div>
-      
+
       <div class="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
         <p>&copy; 2025 Anik Jha. All Rights Reserved.</p>
         <p class="mt-2">Built with passion for ML engineering and clean code</p>
@@ -665,6 +752,18 @@
             section.classList.add('hidden');
           }
         });
+
+        // Update page title based on section
+        const sectionTitles = {
+          'home': 'Anik Jha - ML Engineer & Data Scientist',
+          'about': 'About | Anik Jha',
+          'experience': 'Experience | Anik Jha',
+          'projects': 'Projects | Anik Jha',
+          'blog': 'Blog | Anik Jha',
+          'resume': 'Resume | Anik Jha'
+        };
+        document.title = sectionTitles[id] || 'Anik Jha';
+
         window.scrollTo(0, 0);
       }
 
@@ -699,7 +798,7 @@
         card.addEventListener('click', () => {
           const projectId = card.dataset.project;
           const project = projectData[projectId];
-          
+
           modalTitle.textContent = project.title;
           modalContent.innerHTML = `
             <div class="space-y-6">
@@ -763,7 +862,7 @@
               ` : ''}
             </div>
           `;
-          
+
           projectModal.classList.remove('hidden');
           projectModal.classList.add('flex');
           document.body.style.overflow = 'hidden';
@@ -788,6 +887,14 @@
         link.addEventListener('click', (e) => {
           e.preventDefault();
           const targetId = e.target.getAttribute('href').substring(1);
+
+          // Special handling for blog navigation
+          if (targetId === 'blog') {
+            // Hide blog post view and show blog list
+            blogPost.classList.add('hidden');
+            blogList.classList.remove('hidden');
+          }
+
           handleNavigation(targetId);
         });
       });
@@ -799,6 +906,11 @@
           const slug = hash.split('/')[1];
           showSection('blog');
           renderBlogPost(slug);
+        } else if (hash === 'blog') {
+          // Show blog section with blog list (not a specific post)
+          showSection('blog');
+          blogPost.classList.add('hidden');
+          blogList.classList.remove('hidden');
         } else if (hash) {
           showSection(hash);
         } else {
@@ -812,75 +924,121 @@
           return;
         }
 
-        // Group posts by series (assuming titles contain "Part X" or similar)
-        const seriesInfo = window.posts.map(post => {
-          const match = post.title.match(/Part (\d+)/i);
-          return {
-            ...post,
-            series: match ? 'Quantile Regression Series' : null,
-            part: match ? parseInt(match[1]) : null
-          };
-        });
+        // Group posts by series
+        const qrSeries = window.posts.filter(post => post.slug.includes('blog') && post.slug.includes('medium'));
+        const llmSeries = window.posts.filter(post => post.slug.includes('llm-components'));
+
+        // Color schemes for blog cards
+        const qrColors = [
+          'from-blue-500 to-cyan-600',
+          'from-purple-500 to-pink-600',
+          'from-green-500 to-emerald-600',
+          'from-orange-500 to-red-600',
+          'from-indigo-500 to-purple-600'
+        ];
+
+        const llmColors = [
+          'from-rose-500 to-pink-600',
+          'from-amber-500 to-orange-600'
+        ];
 
         blogList.innerHTML = `
-          <div class="mb-12 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
-            <div class="flex items-start gap-4">
-              <div class="bg-blue-600 text-white p-3 rounded-lg">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-2">Featured Series: Mastering Quantile Regression</h3>
-                <p class="text-gray-700 mb-4">A comprehensive 5-part series diving deep into quantile regression—from theory to production deployment. Perfect for ML engineers who want to move beyond point predictions and embrace distributional thinking.</p>
-                <div class="flex items-center gap-2 text-sm text-gray-600">
-                  <span class="bg-white px-3 py-1 rounded-full font-medium">5 Parts</span>
-                  <span class="bg-white px-3 py-1 rounded-full font-medium">~90 min total</span>
-                  <span class="bg-white px-3 py-1 rounded-full font-medium">Intermediate-Advanced</span>
+          <!-- LLM Components Series -->
+          <div class="mb-12">
+            <h3 class="text-3xl font-bold text-gray-900 mb-6">LLM Components: A Deep Dive</h3>
+            <p class="text-gray-700 mb-6 text-lg">Understanding the building blocks of Large Language Models. From transformers to attention mechanisms, we'll break down how modern AI language systems work.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              ${llmSeries.map((post, index) => {
+          return `
+                  <a href="#blog/${post.slug}" class="blog-post-link group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all cursor-pointer">
+                    <div class="h-48 bg-gradient-to-br ${llmColors[index % llmColors.length]} flex items-center justify-center relative overflow-hidden">
+                      <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                      </svg>
+                      <div class="absolute top-4 left-4">
+                        <span class="bg-white text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
+                          Part ${index + 1}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="p-6">
+                      <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-rose-600 transition-colors">
+                        ${post.title}
+                      </h3>
+                      <p class="text-gray-600 mb-4 leading-relaxed">${(post.snippet || 'Click to read more...').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                      <div class="flex items-center text-rose-600 font-medium">
+                        Read Article
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
+                `;
+        }).join('')}
+              
+              <!-- Placeholder for Part 2 -->
+              <div class="bg-white rounded-xl shadow-lg overflow-hidden opacity-60">
+                <div class="h-48 bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center relative overflow-hidden">
+                  <svg class="w-24 h-24 text-white opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  </svg>
+                  <div class="absolute top-4 left-4">
+                    <span class="bg-white text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
+                      Part 2
+                    </span>
+                  </div>
+                </div>
+                <div class="p-6">
+                  <h3 class="text-xl font-bold mb-2 text-gray-500">
+                    Coming Soon
+                  </h3>
+                  <p class="text-gray-500 mb-4 leading-relaxed">Part 2 will dive into attention mechanisms, multi-head attention, and the complete transformer architecture.</p>
+                  <div class="flex items-center text-gray-400 font-medium">
+                    Stay Tuned
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Blog Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            ${window.posts.map((post, index) => {
-              // Color schemes for each part
-              const colors = [
-                'from-blue-500 to-cyan-600',
-                'from-purple-500 to-pink-600',
-                'from-green-500 to-emerald-600',
-                'from-orange-500 to-red-600',
-                'from-indigo-500 to-purple-600'
-              ];
-              
-              return `
-                <a href="#blog/${post.slug}" class="blog-post-link group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all cursor-pointer">
-                  <div class="h-48 bg-gradient-to-br ${colors[index % colors.length]} flex items-center justify-center relative overflow-hidden">
-                    <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                    </svg>
-                    <div class="absolute top-4 left-4">
-                      <span class="bg-white text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
-                        Part ${index + 1}
-                      </span>
-                    </div>
-                  </div>
-                  <div class="p-6">
-                    <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
-                      ${post.title}
-                    </h3>
-                    <p class="text-gray-600 mb-4 leading-relaxed">${(post.snippet || 'Click to read more...').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
-                    <div class="flex items-center text-blue-600 font-medium">
-                      Read Article
-                      <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          <!-- Quantile Regression Series -->
+          <div class="mb-12">
+            <h3 class="text-3xl font-bold text-gray-900 mb-6">Mastering Quantile Regression</h3>
+            <p class="text-gray-700 mb-6 text-lg">A comprehensive 5-part series diving deep into quantile regression—from theory to production deployment. Perfect for ML engineers who want to move beyond point predictions and embrace distributional thinking.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              ${qrSeries.map((post, index) => {
+          return `
+                  <a href="#blog/${post.slug}" class="blog-post-link group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all cursor-pointer">
+                    <div class="h-48 bg-gradient-to-br ${qrColors[index % qrColors.length]} flex items-center justify-center relative overflow-hidden">
+                      <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                       </svg>
+                      <div class="absolute top-4 left-4">
+                        <span class="bg-white text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
+                          Part ${index + 1}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </a>
-              `;
-            }).join('')}
+                    <div class="p-6">
+                      <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
+                        ${post.title}
+                      </h3>
+                      <p class="text-gray-600 mb-4 leading-relaxed">${(post.snippet || 'Click to read more...').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                      <div class="flex items-center text-blue-600 font-medium">
+                        Read Article
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
+                `;
+        }).join('')}
+            </div>
           </div>
         `;
       }
@@ -890,7 +1048,31 @@
         if (post) {
           const partMatch = post.title.match(/Part (\d+)/i);
           const partNumber = partMatch ? parseInt(partMatch[1]) : null;
-          
+
+          // Determine which series this post belongs to
+          const isQRSeries = post.slug.includes('blog') && post.slug.includes('medium');
+          const isLLMSeries = post.slug.includes('llm-components');
+
+          let seriesInfo = null;
+          if (partNumber) {
+            if (isQRSeries) {
+              seriesInfo = {
+                name: 'Quantile Regression Series',
+                total: 5,
+                color: 'blue'
+              };
+            } else if (isLLMSeries) {
+              seriesInfo = {
+                name: 'LLM Components Series',
+                total: 2,
+                color: 'rose'
+              };
+            }
+          }
+
+          // Update browser tab title
+          document.title = post.title + ' | Anik Jha';
+
           blogPost.innerHTML = `
             <article class="bg-white rounded-xl shadow-lg p-8 md:p-12">
               <a href="#blog" class="back-to-blog inline-flex items-center text-blue-600 hover:text-blue-700 mb-6 font-medium">
@@ -900,10 +1082,10 @@
                 Back to Blog
               </a>
               
-              ${partNumber ? `
+              ${seriesInfo ? `
                 <div class="mb-4">
-                  <span class="bg-blue-100 text-blue-800 text-sm font-semibold px-4 py-2 rounded-full">
-                    Part ${partNumber} of 5 - Quantile Regression Series
+                  <span class="bg-${seriesInfo.color}-100 text-${seriesInfo.color}-800 text-sm font-semibold px-4 py-2 rounded-full">
+                    Part ${partNumber} of ${seriesInfo.total} - ${seriesInfo.name}
                   </span>
                 </div>
               ` : ''}
@@ -950,25 +1132,43 @@
           `;
           blogList.classList.add('hidden');
           blogPost.classList.remove('hidden');
-          
+
           // Apply syntax highlighting and math rendering after rendering
           setTimeout(() => {
-            // Syntax highlighting
+            // Convert mermaid code blocks to mermaid divs
+            document.querySelectorAll('#blog-post pre code.language-mermaid').forEach((block) => {
+              const pre = block.parentElement;
+              const mermaidDiv = document.createElement('div');
+              mermaidDiv.className = 'mermaid';
+              mermaidDiv.textContent = block.textContent;
+              pre.replaceWith(mermaidDiv);
+            });
+
+            // Syntax highlighting (skip mermaid blocks)
             document.querySelectorAll('#blog-post pre code').forEach((block) => {
-              if (window.hljs) {
+              if (!block.classList.contains('language-mermaid') && window.hljs) {
                 hljs.highlightElement(block);
               }
             });
-            
-            // Render math with KaTeX - ONLY use $$ and \( \) to avoid conflicts with currency
+
+            // Render math with KaTeX - use $$ for display math and \( \) for inline math
+            // Single $ is NOT supported to avoid conflicts with currency symbols
             if (window.renderMathInElement) {
               renderMathInElement(document.getElementById('blog-post'), {
                 delimiters: [
-                  {left: '$$', right: '$$', display: true},
-                  {left: '\\(', right: '\\)', display: false},
-                  {left: '\\[', right: '\\]', display: true}
+                  { left: '$$', right: '$$', display: true },
+                  { left: '\\(', right: '\\)', display: false },
+                  { left: '\\[', right: '\\]', display: true }
                 ],
+                ignoredTags: ['table', 'tr', 'td', 'th', 'tbody', 'thead'],
                 throwOnError: false
+              });
+            }
+
+            // Render mermaid diagrams
+            if (window.mermaid) {
+              window.mermaid.run({
+                querySelector: '#blog-post .mermaid'
               });
             }
           }, 100);
@@ -1012,14 +1212,14 @@
           });
           const html = converter.makeHtml(text);
           resumeContent.innerHTML = html;
-          
+
           // Render math in resume if present
           setTimeout(() => {
             if (window.renderMathInElement) {
               renderMathInElement(resumeContent, {
                 delimiters: [
-                  {left: '$$', right: '$$', display: true},
-                  {left: '$', right: '$', display: false}
+                  { left: '$$', right: '$$', display: true },
+                  { left: '$', right: '$', display: false }
                 ],
                 throwOnError: false
               });
@@ -1041,7 +1241,7 @@
           window.scrollTo(0, 0);
           return;
         }
-        
+
         // Handle back to blog link
         if (e.target.classList.contains('back-to-blog') || e.target.closest('.back-to-blog')) {
           e.preventDefault();
@@ -1052,7 +1252,7 @@
           window.scrollTo(0, 0);
           return;
         }
-        
+
         // Handle links within blog content that navigate to other posts
         const link = e.target.closest('a');
         if (link && link.getAttribute('href')?.startsWith('#blog/')) {
@@ -1088,14 +1288,14 @@
 
       renderBlogList();
       renderResume();
-      
+
       // Render math in blog list after it loads
       setTimeout(() => {
         if (window.renderMathInElement && blogList) {
           renderMathInElement(blogList, {
             delimiters: [
-              {left: '$$', right: '$$', display: true},
-              {left: '$', right: '$', display: false}
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false }
             ],
             throwOnError: false
           });
@@ -1113,7 +1313,7 @@
       const prevPhoto = document.getElementById('prev-photo');
       const nextPhoto = document.getElementById('next-photo');
       let currentPhotoIndex = 0;
-      
+
       // Your Instagram photos - organized for visual appeal
       let photos = [
         { src: 'assets/insta_images/Screenshot from 2025-11-15 21-20-05.png', caption: 'From @we_earthlngs' },
@@ -1132,7 +1332,7 @@
       function renderGallery() {
         instagramLoading.style.display = 'none';
         photoGallery.style.display = 'grid';
-        
+
         photoGallery.innerHTML = photos.map((photo, index) => `
           <div class="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer aspect-square photo-item transform hover:-translate-y-1" data-index="${index}">
             <img src="${photo.src}" alt="${photo.caption}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/667eea/ffffff?text=Photo+${index + 1}'">
@@ -1149,7 +1349,7 @@
             </div>
           </div>
         `).join('');
-        
+
         // Add click listeners to photos
         document.querySelectorAll('.photo-item').forEach(item => {
           item.addEventListener('click', () => {
@@ -1221,4 +1421,5 @@
   </script>
 
 </body>
+
 </html>

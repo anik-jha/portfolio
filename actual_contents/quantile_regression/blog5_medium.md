@@ -45,7 +45,7 @@ By the end, you'll know how to build state-of-the-art QR systems that provide **
 
 ## From Intervals to Distributions
 
-So far, we've predicted 3–5 quantiles. This gives prediction intervals—useful but incomplete.
+So far, we've predicted 3-5 quantiles. This gives prediction intervals - useful but incomplete.
 
 ### The Goal: Full Conditional Distributions
 
@@ -459,7 +459,7 @@ for epoch in range(100):
 **⚡ Speed Tips**:
 - **For quick testing**: Reduce to 20 epochs (change `range(100)` → `range(20)`)
 - **Use GPU if available**: Add `model = model.to('cuda')` and `X_batch, y_batch = X_batch.to('cuda'), y_batch.to('cuda')` in the loop
-- **This toy dataset is small** (1600 samples)—neural networks shine with 100K+ samples. For small data, stick with LightGBM from Step 1.
+- **This toy dataset is small** (1600 samples) - neural networks shine with 100K+ samples. For small data, stick with LightGBM from Step 1.
 - **Why regenerate data?** Data passed through LightGBM and multiple transformations can have fragmented memory layout. Fresh data from `np.random` is contiguous → PyTorch's DataLoader is 10-100× faster. If you remove the regeneration block and reuse `X_train/y_train`, expect slow training.
 
 ---
@@ -790,7 +790,7 @@ Note: Typical good scores are 1-3× the y_std (2.88)
 
 **Understanding the output:**
 - **Average width (4.90)**: The typical span of your prediction intervals
-- **Average penalty (3.32)**: Cost from points outside intervals—this is 40% of the total score, indicating under-coverage
+- **Average penalty (3.32)**: Cost from points outside intervals - this is 40% of the total score, indicating under-coverage
 - **Coverage (73% vs 80% target)**: Intervals are too narrow, missing 7% of points
 - **Interpretation**: Score of 8.23 is ~2.8× the y_std (2.88), which is acceptable but improvable. The warning shows the main issue is coverage, not interval width.
 
@@ -874,7 +874,7 @@ distribution and true value. Lower is better.
 
 **Understanding the output:**
 - **CRPS (0.64)**: Average distributional error in the same units as y
-- **CRPS / y_std (0.22 or 22.3%)**: This is **good**—under the 0.5 threshold means predictions are reasonably tight
+- **CRPS / y_std (0.22 or 22.3%)**: This is **good** - under the 0.5 threshold means predictions are reasonably tight
 - **Context**: With y ranging from -7.7 to 14.1, a CRPS of 0.64 means the predicted distributions are, on average, less than 1 unit away from true values
 - **Comparison**: This is better than simply using median predictions, as it accounts for the full distributional shape
 
@@ -975,8 +975,8 @@ if __name__ == '__main__':
 
 **🔒 Production Security Checklist** (before deploying the API):
 - [ ] Add API key authentication (e.g., `Flask-HTTPAuth` or API gateway like AWS API Gateway)
-- [ ] Implement rate limiting (e.g., `Flask-Limiter`—prevent abuse)
-- [ ] Validate input ranges (e.g., reject `features` outside training data range—prevents adversarial inputs)
+- [ ] Implement rate limiting (e.g., `Flask-Limiter` - prevent abuse)
+- [ ] Validate input ranges (e.g., reject `features` outside training data range - prevents adversarial inputs)
 - [ ] Log all requests (for auditing and debugging)
 - [ ] Use HTTPS (not HTTP) for encrypted communication
 - [ ] Deploy behind a firewall or VPN (don't expose to public internet without security review)

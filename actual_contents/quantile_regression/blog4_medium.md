@@ -13,7 +13,7 @@
 In Blog 3, we built a linear QR model for bike demand: `demand ~ temp + hour + is_weekend`. It worked... until we examined the residuals more closely.
 
 **The problem**: Real-world relationships are rarely linear:
-- Temperature vs. demand isn't linear—it's an inverted U (demand drops below 5°C and above 35°C due to extreme weather)
+- Temperature vs. demand isn't linear - it's an inverted U (demand drops below 5°C and above 35°C due to extreme weather)
 - Hour vs. demand has sharp spikes at rush hours (7-9am, 5-7pm)—not a smooth linear trend
 - Temperature × hour interactions matter (hot evenings drive more demand than hot mornings)
 

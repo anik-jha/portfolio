@@ -8,7 +8,8 @@ window.postsReady = (async () => {
     'quantile_regression/blog3_medium.md',
     'quantile_regression/blog4_medium.md',
     'quantile_regression/blog5_medium.md',
-    'llm_components/llm_components_part1.md'
+    'llm_components/llm_components_part1.md',
+    'llm_components/llm_components_part2.md'
   ];
 
   // Custom snippets for each blog post
@@ -18,7 +19,8 @@ window.postsReady = (async () => {
     'blog3-medium': 'Build your first quantile regression model in Python. Step-by-step implementation with statsmodels, complete with evaluation metrics and real-world examples.',
     'blog4-medium': 'Scale quantile regression to non-linear patterns with gradient boosting. Learn LightGBM and XGBoost techniques for production-grade probabilistic forecasting.',
     'blog5-medium': 'Master state-of-the-art techniques including conformal prediction, distributional regression, and neural network approaches for robust uncertainty quantification in production.',
-    'llm-components-part1': 'A comprehensive guide to understanding transformers from the ground up. Learn tokenization, embeddings, positional encoding, and the architecture that powers modern LLMs like GPT and Claude.'
+    'llm-components-part1': 'A comprehensive guide to understanding transformers from the ground up. Learn tokenization, embeddings, positional encoding, and the architecture that powers modern LLMs like GPT and Claude.',
+    'llm-components-part2': 'Dive deep into the attention mechanism—the revolutionary innovation that changed AI forever. Explore self-attention, multi-head attention, and feed-forward networks with intuitive explanations and complete Python implementations.'
   };
   const pathCandidates = ['actual_contents/', 'public/actual_contents/'];
 
@@ -37,7 +39,7 @@ window.postsReady = (async () => {
       let res = null;
       for (const base of pathCandidates) {
         try {
-          res = await fetch(base + file);
+          res = await fetch(base + file, { cache: "no-store" });
           if (res.ok) {
             break;
           }
@@ -160,18 +162,28 @@ window.postsReady = (async () => {
         return placeholder;
       });
 
-      // Protect inline math with LaTeX commands ($\text{...}$, $\beta$, etc) - for backward compatibility
-      contentText = contentText.replace(/\$([^\$\n]*?[\\{}_^][^\$\n]*?)\$/g, (match, inner) => {
+      // Convert ALL $...$ inline math to \(...\) format (excluding currency)
+      // First protect currency (e.g., $1.2M, $800K, $10M)
+      const currencyPlaceholders = [];
+      let currencyCounter = 0;
+      contentText = contentText.replace(/\$(\d+(?:\.\d+)?[KMB]?)\b/g, (match) => {
+        const placeholder = `XXXXXCURRENCYXXXXX${currencyCounter}XXXXXCURRENCYXXXXX`;
+        currencyPlaceholders.push({ placeholder, content: match });
+        currencyCounter++;
+        return placeholder;
+      });
+
+      // Now convert all remaining $...$ to \(...\) and protect
+      contentText = contentText.replace(/\$([^\$\n]+?)\$/g, (match, inner) => {
         const placeholder = `XXXXXMATHINLINEXXXXX${mathCounter}XXXXXMATHINLINEXXXXX`;
         mathPlaceholders.push({ placeholder, content: `\\(${inner}\\)` });
         mathCounter++;
         return placeholder;
       });
 
-      // Now protect currency dollar signs (like $1.2M, $800K, $10M)
-      contentText = contentText.replace(/\$(\d+(?:\.\d+)?[KMB]?)\b/g, (match, amount) => {
-        // Just keep the dollar sign as-is since KaTeX won't treat single $ as delimiter anymore
-        return match;
+      // Restore currency placeholders
+      currencyPlaceholders.forEach(({ placeholder, content: currencyContent }) => {
+        contentText = contentText.split(placeholder).join(currencyContent);
       });
 
       let content = converter.makeHtml(contentText);

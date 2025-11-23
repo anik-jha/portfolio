@@ -43,7 +43,7 @@ The word "bank" needs to look at other words in the sentence to understand which
 
 ### The Key Insight
 
-Traditional RNNs process sequences one token at a time, left to right. They're like reading with a flashlight in the dark—you can only see the current word and vaguely remember what came before.
+Traditional RNNs process sequences one token at a time, left to right. They're like reading with a flashlight in the dark - you can only see the current word and vaguely remember what came before.
 
 **Self-attention says**: "Forget sequential processing! Every word can look at every other word simultaneously and decide what's relevant."
 
@@ -77,7 +77,7 @@ Where $W^Q, W^K, W^V \in \mathbb{R}^{d_{model} \times d_k}$ are learned weight m
 
 $$\text{scores} = QK^T \in \mathbb{R}^{n \times n}$$
 
-This creates a matrix where entry $(i,j)$ is the dot product of query $i$ with key $j$—measuring their similarity.
+This creates a matrix where entry $(i,j)$ is the dot product of query $i$ with key $j$ - measuring their similarity.
 
 3. **Scale the scores** (for numerical stability):
 
@@ -89,7 +89,7 @@ Why divide by $\sqrt{d_k}$? As dimensions grow, dot products get larger, pushing
 
 $$\text{attention\_weights} = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)$$
 
-Now each row sums to 1—these are probability distributions over which tokens to attend to.
+Now each row sums to 1 - these are probability distributions over which tokens to attend to.
 
 5. **Weighted sum of values**:
 
@@ -248,28 +248,28 @@ Let's trace through a concrete example:
 
 ### The Masking Trick: Causal Attention
 
-For language modeling (predicting the next token), we need **causal attention**—tokens can only attend to previous tokens, not future ones. Otherwise, it's cheating!
+For language modeling (predicting the next token), we need **causal attention** - tokens can only attend to previous tokens, not future ones. Otherwise, it's cheating!
 
 ```python
 def create_causal_mask(seq_length):
     """
     Creates a causal mask: upper triangular matrix of -inf
     """
-    mask = torch.triu(torch.ones(seq_length, seq_length), diagonal=1)
-    mask = mask.masked_fill(mask == 1, float('-inf'))
-    return mask
+    mask = torch.tril(torch.ones(seq_length, seq_length))
+    return mask.view(1, 1, seq_length, seq_length)
 
 # Example: sequence of length 4
 mask = create_causal_mask(4)
 print(mask)
 
 # Output:
-# tensor([[  0., -inf, -inf, -inf],
-#         [  0.,   0., -inf, -inf],
-#         [  0.,   0.,   0., -inf],
-#         [  0.,   0.,   0.,   0.]])
+# tensor([[  1.,   0.,   0.,   0.],
+#         [  1.,   1.,   0.,   0.],
+#         [  1.,   1.,   1.,   0.],
+#         [  1.,   1.,   1.,   1.]])
 
-# When added to attention scores before softmax:
+# When used in attention:
+# scores.masked_fill(mask == 0, float('-inf'))
 # - Position 0 can only attend to position 0
 # - Position 1 can attend to positions 0-1
 # - Position 2 can attend to positions 0-2
@@ -527,7 +527,7 @@ This is why long sequences are expensive! (And why there's tons of research on e
 
 ### The Intuition
 
-Attention is about **communication**—tokens sharing information with each other. But we also need **computation**—actually processing that information!
+Attention is about **communication** - tokens sharing information with each other. But we also need **computation** - actually processing that information!
 
 Enter the **Feed-Forward Network (FFN)**: a simple but powerful two-layer neural network applied to each position independently.
 
@@ -763,6 +763,49 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+class PositionalEncoding(nn.Module):
+    def __init__(self, d_model, max_len=5000, dropout=0.1):
+        """
+        Args:
+            d_model: Dimension of embeddings
+            max_len: Maximum sequence length we want to support
+            dropout: Dropout rate to apply after adding positional encoding
+        """
+        super().__init__()
+        self.dropout = nn.Dropout(p=dropout)
+        
+        # Create the positional encoding matrix
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
+        
+        # Create the division term: 10000^(2i/d_model)
+        div_term = torch.exp(
+            torch.arange(0, d_model, 2).float() * 
+            (-math.log(10000.0) / d_model)
+        )
+        
+        # Apply sin to even indices
+        pe[:, 0::2] = torch.sin(position * div_term)
+        # Apply cos to odd indices
+        pe[:, 1::2] = torch.cos(position * div_term)
+        
+        # Add batch dimension: (1, max_len, d_model)
+        pe = pe.unsqueeze(0)
+        
+        # Register as buffer (not a parameter, but part of state)
+        self.register_buffer('pe', pe)
+    
+    def forward(self, x):
+        """
+        Args:
+            x: Embeddings, shape (batch_size, seq_length, d_model)
+        Returns:
+            Embeddings with positional encoding added
+        """
+        # Add positional encoding to embeddings
+        x = x + self.pe[:, :x.size(1), :]
+        return self.dropout(x)
+
 class GPTLanguageModel(nn.Module):
     def __init__(self, vocab_size, d_model=512, num_heads=8, 
                  num_layers=6, d_ff=2048, max_seq_length=512, dropout=0.1):
@@ -782,6 +825,8 @@ class GPTLanguageModel(nn.Module):
         
         self.d_model = d_model
         self.vocab_size = vocab_size
+        
+        self.max_seq_length = max_seq_length
         
         # Token embedding
         self.token_embedding = nn.Embedding(vocab_size, d_model)
@@ -818,9 +863,7 @@ class GPTLanguageModel(nn.Module):
     
     def create_causal_mask(self, seq_length, device):
         """Create causal attention mask"""
-        mask = torch.triu(torch.ones(seq_length, seq_length, device=device), 
-                         diagonal=1)
-        mask = mask.masked_fill(mask == 1, 0)
+        mask = torch.tril(torch.ones(seq_length, seq_length, device=device))
         return mask.view(1, 1, seq_length, seq_length)
     
     def forward(self, x, targets=None):
@@ -881,7 +924,7 @@ class GPTLanguageModel(nn.Module):
         """
         for _ in range(max_new_tokens):
             # Crop to max sequence length if needed
-            idx_cond = idx if idx.size(1) <= 512 else idx[:, -512:]
+            idx_cond = idx if idx.size(1) <= self.max_seq_length else idx[:, -self.max_seq_length:]
             
             # Get predictions
             logits, _ = self(idx_cond)
@@ -1083,6 +1126,8 @@ All from the simple objective of "predict the next token"!
 Simplest approach: always pick the most likely next token.
 
 ```python
+END_TOKEN = 50256  # GPT-2 end of text token
+
 def greedy_generate(model, start_tokens, max_length=50):
     model.eval()
     tokens = start_tokens.clone()
@@ -1134,6 +1179,7 @@ def sample_with_temperature(logits, temperature=1.0):
     next_token = torch.multinomial(probs, num_samples=1)
     
     return next_token
+```
 
 ### Visualizing Temperature
 
@@ -1145,10 +1191,10 @@ Think of temperature as a "flatness" control for your probability distribution:
 ```mermaid
 graph TD
     A[Logits] --> B{Temperature}
-    B -->|Low T| C[Sharp Peak<br/>(Predictable)]
-    B -->|High T| D[Flat Distribution<br/>(Random)]
+    B -->|Low T| C["Sharp Peak<br/>(Predictable)"]
+    B -->|High T| D["Flat Distribution<br/>(Random)"]
 ```
-```
+
 
 ### Top-K Sampling
 
@@ -1353,7 +1399,7 @@ Now go forth and build amazing things!
 
 I cannot stress enough how much this guide owes to the community. In particular:
 
-- **Andrej Karpathy**: His "Let's build GPT: from scratch, in code, spelled out" is a masterpiece of education. If you want to see a master at work, watch it.
+- **Andrej Karpathy**: His "Let's build GPT: from scratch, in code, spelled out" is a masterpiece for llm learning. If you want to see a master at work, watch it.
 - **The "Attention Is All You Need" Authors**: For writing the paper that started it all.
 - **You**: For actually reading this far. Seriously, most people stop at "matrix multiplication." You're one of the good ones.
 

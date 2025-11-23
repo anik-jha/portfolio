@@ -7,7 +7,7 @@
 
 ## Introduction: The Great Language Model Heist
 
-Imagine you're trying to predict what comes next in a sentence. Humans do this constantly—we finish each other's sentences, anticipate plot twists, and know that "May the Force be..." will almost certainly end with "with you." But how do you teach a machine to do this?
+Imagine you're trying to predict what comes next in a sentence. Humans do this constantly - we finish each other's sentences, anticipate plot twists, and know that "May the Force be..." will almost certainly end with "with you." But how do you teach a machine to do this?
 
 The answer, my friend, is transformers. Not the robots-in-disguise kind, but the architecture that's been causing both excitement and existential dread since 2017. Let's take this journey together, building from the ground up.
 
@@ -38,7 +38,7 @@ flowchart TD
 
 ### The Intuition
 
-You can't feed raw text into a neural network. It's like trying to eat soup with a fork—technically possible, but messy and inefficient. We need to break text into **tokens**: the atomic units of language that our model will understand.
+You can't feed raw text into a neural network. It's like trying to eat soup with a fork - technically possible, but messy and inefficient. We need to break text into **tokens**: the atomic units of language that our model will understand.
 
 Think of tokenization like Lego blocks. You don't try to describe an entire castle; you describe it as a collection of standard blocks that can be reassembled.
 
@@ -261,7 +261,7 @@ We need to inject positional information. But how? We could just add a position 
 - Numbers get arbitrarily large
 - No natural notion of "relative position"
 
-The solution: **sinusoidal positional encodings**—a stroke of genius from the original Transformer paper.
+The solution: **sinusoidal positional encodings** - a stroke of genius from the original Transformer paper.
 
 ### The Math
 
@@ -452,7 +452,7 @@ $$\text{Output}_1 = \text{LayerNorm}(X + \text{MultiHeadAttention}(X))$$
 
 $$\text{Output}_2 = \text{LayerNorm}(\text{Output}_1 + \text{FFN}(\text{Output}_1))$$
 
-The \(+\) operations are **residual connections**—we add the input back to the output. This creates gradient highways that prevent the vanishing gradient problem in deep networks.
+The \(+\) operations are **residual connections** - we add the input back to the output. This creates gradient highways that prevent the vanishing gradient problem in deep networks.
 
 ### The Code (Structure Only - Details Coming)
 
@@ -507,7 +507,7 @@ class TransformerBlock(nn.Module):
 
 ### Why It Works
 
-**Residual Connections**: Imagine trying to learn the identity function \(f(x) = x\). Hard! But learning \(f(x) = x + g(x)\) where \(g(x) = 0\) is easy—just set \(g\) to output zeros. Residual connections make it easy for the network to learn small refinements to the input.
+**Residual Connections**: Imagine trying to learn the identity function \(f(x) = x\). Hard! But learning \(f(x) = x + g(x)\) where \(g(x) = 0\) is easy - just set \(g\) to output zeros. Residual connections make it easy for the network to learn small refinements to the input.
 
 **Layer Normalization**: Normalizes across the feature dimension, keeping activations in a reasonable range. This prevents numerical instability and speeds up training.
 

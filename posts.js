@@ -9,7 +9,8 @@ window.postsReady = (async () => {
     'quantile_regression/blog4_medium.md',
     'quantile_regression/blog5_medium.md',
     'llm_components/llm_components_part1.md',
-    'llm_components/llm_components_part2.md'
+    'llm_components/llm_components_part2.md',
+    'pet_projects/daily_paper_reader/daily-paper-reader.md'
   ];
 
   // Custom snippets for each blog post
@@ -20,7 +21,8 @@ window.postsReady = (async () => {
     'blog4-medium': 'Scale quantile regression to non-linear patterns with gradient boosting. Learn LightGBM and XGBoost techniques for production-grade probabilistic forecasting.',
     'blog5-medium': 'Master state-of-the-art techniques including conformal prediction, distributional regression, and neural network approaches for robust uncertainty quantification in production.',
     'llm-components-part1': 'A comprehensive guide to understanding transformers from the ground up. Learn tokenization, embeddings, positional encoding, and the architecture that powers modern LLMs like GPT and Claude.',
-    'llm-components-part2': 'Dive deep into the attention mechanism—the revolutionary innovation that changed AI forever. Explore self-attention, multi-head attention, and feed-forward networks with intuitive explanations and complete Python implementations.'
+    'llm-components-part2': 'Dive deep into the attention mechanism—the revolutionary innovation that changed AI forever. Explore self-attention, multi-head attention, and feed-forward networks with intuitive explanations and complete Python implementations.',
+    'daily-paper-reader': 'I built a tool to help me keep up with the flood of AI papers. It fetches the latest papers from ArXiv and OpenReview, summarizes them using Gemini, and presents them in a clean, daily digest.'
   };
   const pathCandidates = ['actual_contents/', 'public/actual_contents/'];
 
@@ -193,14 +195,21 @@ window.postsReady = (async () => {
         content = content.split(placeholder).join(mathContent);
       });
 
-      // Fix image paths: detect which series folder we're in from the file path
-      const seriesFolder = file.split('/')[0]; // e.g., 'quantile_regression' or 'llm_components'
-      content = content.replace(/\<img([^\>]+)src="\.\.\/assets\/([^"]+)"([^\>]*)\>/g, `<img$1src="actual_contents/${seriesFolder}/assets/$2"$3>`);
-      content = content.replace(/\<img([^\>]+)src="assets\/([^"]+)"([^\>]*)\>/g, `<img$1src="actual_contents/${seriesFolder}/assets/$2"$3>`);
-      // Also handle direct image references without assets/ prefix
-      content = content.replace(/\<img([^\>]+)src="([^"/:]+\.(png|jpg|jpeg|gif|svg))"([^\>]*)\>/g, `<img$1src="actual_contents/${seriesFolder}/$2"$4>`);
+      // Fix image paths: use the file's directory as the base
+      const fileDirectory = file.substring(0, file.lastIndexOf('/'));
 
-      window.posts.push({ slug, title, date, snippet, content });
+      content = content.replace(/\<img([^\>]+)src="\.\.\/assets\/([^"]+)"([^\>]*)\>/g, `<img$1src="actual_contents/${fileDirectory}/assets/$2"$3>`);
+      content = content.replace(/\<img([^\>]+)src="assets\/([^"]+)"([^\>]*)\>/g, `<img$1src="actual_contents/${fileDirectory}/assets/$2"$3>`);
+      // Also handle direct image references without assets/ prefix
+      content = content.replace(/\<img([^\>]+)src="([^"/:]+\.(png|jpg|jpeg|gif|svg))"([^\>]*)\>/g, `<img$1src="actual_contents/${fileDirectory}/$2"$4>`);
+
+      // Determine series from folder path
+      let series = 'other';
+      if (file.includes('quantile_regression')) series = 'quantile_regression';
+      else if (file.includes('llm_components')) series = 'llm_components';
+      else if (file.includes('pet_projects')) series = 'pet_projects';
+
+      window.posts.push({ slug, title, date, snippet, content, series });
     } catch (err) {
       console.error('Error loading post', file, err);
     }

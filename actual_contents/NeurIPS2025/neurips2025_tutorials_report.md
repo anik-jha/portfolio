@@ -54,33 +54,33 @@ This was the meat of the morning session. Feature Attribution answers the questi
 It sounds simple. You want a heatmap. Red pixels = "Model looked here." Blue pixels = "Model ignored this."
 But how do we calculate that mathematically? The tutorial covered three families of methods, ranging from "brute force" to "elegant math."
 
-#### Method A: Perturbation (The "Poke It" Method)
+#### **Method A: Perturbation (The "Poke It" Method)**
 This is the most intuitive approach.
 
-##### **Intuition** 
+**Intuition** 
 If I want to know if the steering wheel is important for driving, I remove the steering wheel while driving. If I crash, it was important. If I keep driving fine, it was decorative.
 
-##### **Occlusion** 
+**Occlusion** 
 1.  Take an image.
 2.  Gray out a 10x10 square (occlude it).
 3.  Run the model.
 4.  Did the confidence drop?
 5.  Move the square and repeat.
 
-##### **The Problem: Out-of-Distribution (OOD) Data** 
+**The Problem: Out-of-Distribution (OOD) Data** 
 When you gray out a square of a dog's face, you create an image that looks like a "gray-boxed dog." The model has never seen a gray-boxed dog. It might predict "Garbage" not because the face was important, but because the image looks like corrupted data.
 
 The presenters emphasized this repeatedly: **Perturbation breaks the data manifold.** You are asking the model to predict on data it wasn't trained for. It's like testing a student's math skills by screaming in their ear while they take the test. If they fail, is it because they don't know math, or because you are screaming?
 
-#### Method B: SHAP (Shapley Additive Explanations)
+#### **Method B: SHAP (Shapley Additive Explanations)**
 This is the "adult" method. It comes from Game Theory (yes, actual economics from Lloyd Shapley).
 
-##### **The Analogy** 
+**The Analogy** 
 Imagine a group of features (Pixel 1, Pixel 2, Pixel 3) are employees working together to generate a profit (the Prediction Score).
 Some employees are superstars (Pixel 1 always boosts the score). Some are lazy (Pixel 3 does nothing). Some only work well when Pixel 2 is around (Interaction effects).
 SHAP asks: *How do we fairly distribute the bonus check among these employees?*
 
-##### **The Math** 
+**The Math** 
 You have to calculate the "marginal contribution" of a feature.
 This means: What is the score with {A, B} versus just {B}? What about {A, C} vs {C}? What about {A, B, C} vs {B, C}?
 To do this perfectly, you have to do this for **every possible subset** of features.
@@ -88,11 +88,11 @@ For 3 features, that's easy (\(2^3 = 8\)).
 For 1024 features (a small image), that is \(2^{1024}\) combinations.
 \(2^{1024}\) is a number larger than the number of atoms in the universe. We cannot compute this.
 
-##### **The Solution: KernelSHAP** 
+**The Solution: KernelSHAP** 
 We don't actually calculate all \(2^{1024}\) subsets. We sample them and fit a weighted linear regression model that approximates the Shapley values.
 It's mathematically beautiful, but computationally expensive. Running SHAP on a large LLM is basically a great way to heat your house in winter without using a heater.
 
-##### **Code Snippet (Mental Model)** 
+**Code Snippet (Mental Model)** 
 
 ```python
 def calculate_shap(feature, model, inputs):
@@ -105,10 +105,10 @@ def calculate_shap(feature, model, inputs):
     return average(marginal_contributions)
 ```
 
-#### Method C: Gradients (Calculus to the Rescue)
+#### **Method C: Gradients (Calculus to the Rescue)**
 Why treat the model as a black box when we have the weights? We can just take the derivative!
 
-##### **Vanilla Gradients** 
+**Vanilla Gradients** 
 Compute \(\frac{\partial y}{\partial x}\).
 This tells you: "If I brighten this pixel by 1 unit, how much does the score increase?"
 
@@ -116,12 +116,12 @@ This tells you: "If I brighten this pixel by 1 unit, how much does the score inc
     Imagine the model is 100% confident it's a cat. The score is 1.0. If you make the ear more "cat-like", the score stays at 1.0. The gradient is zero.
     Does that mean the ear is unimportant? No! It just means the model is already convinced. Vanilla gradients fail here because they only measure *local* sensitivity, not global importance.
 
-##### **Integrated Gradients (The Fix)** 
+**Integrated Gradients (The Fix)** 
 Instead of looking at the gradient at the end, we start from a "baseline" (a black image) and slowly fade in the cat image.
 We sum up the gradients along this entire path.
 This captures the contribution of the ear *while* the model was making up its mind. It satisfies the axiom of "Completeness" (the sum of attributions equals the total prediction score).
 
-##### **SmoothGrad** 
+**SmoothGrad** 
 Take the input, add some Gaussian noise, compute the gradient, repeat 50 times, and average it.
 It's literally "denoising" the explanation. It turns the "static" of a vanilla gradient map into a nice, smooth blob that actually looks like the object.
 
@@ -132,7 +132,7 @@ Answer: Because of the training data. The model is just a reflection of what it 
 
 Data Attribution asks: **Which training example is responsible for this prediction?**
 
-##### **Influence Functions** 
+**Influence Functions** 
 This relies on the Hessian (matrix of second derivatives).
 It answers the counterfactual: *"If I deleted Training Image #425, how would the prediction on Test Image #7 change?"*
 *   **The Math:** It involves inverting the Hessian matrix. This is approximately impossible for large models (billion parameters = billion x billion matrix).
@@ -140,7 +140,7 @@ It answers the counterfactual: *"If I deleted Training Image #425, how would the
 *   **Use Case:** Mislabeled Data Detection.
     If the model predicts "Dog" for a "Cat", check the Influence Functions. You will likely find the Top-5 most influential training images are actually Cats mislabeled as Dogs. The model isn't dumb; the data is wrong. It learned exactly what you taught it.
 
-##### **TracIn** 
+**TracIn** 
 Instead of one big calculation at the end, we track the gradient dot products during training.
 *   *Idea:* Every time the model trains on Example A, does the loss on Test Example B go down?
 *   If yes -> Example A is a "Helper."
@@ -153,7 +153,7 @@ Instead of one big calculation at the end, we track the gradient dot products du
 This is the frontier. The "Wild West" of XAI.
 We aren't looking at inputs or data. We are looking at the weights themselves. We are cracking open the skull and probing the neurons.
 
-##### **Sparse Autoencoders (SAEs)** 
+**Sparse Autoencoders (SAEs)** 
 Neural networks use **Superposition**. This is a mind-bending concept.
 Imagine a vector of size 2. (x, y).
 You can store "North" and "East" easily.
@@ -171,7 +171,7 @@ They take the dense activations (the 2D vector) and map them to a much larger, s
     *   Claude replied: "I am the Golden Gate Bridge, a majestic suspension bridge in San Francisco..."
     *   This proves we can find *and manipulate* specific concepts inside the brain of an LLM. It's like finding the "Hunger" neuron in a mouse and turning it on.
 
-##### **The Dream of Mech Interp** 
+**The Dream of Mech Interp** 
 One day, we won't need test sets. We will just look at the weights and say:
 "Ah, I see a 'Deception Circuit' connected to the 'User Trust Module'. Let's delete that."
 We are not there yet. Not even close. But that is the dream.
@@ -229,12 +229,12 @@ The internet contains GitHub.
 GitHub contains the benchmark datasets (MMLU, HumanEval, etc.).
 Therefore, **the model has seen the test answers during training.**
 
-##### **The Smoking Gun** 
+**The Smoking Gun** 
 *   Researchers found that if you ask GPT-4 specific questions from a benchmark, it sometimes completes the question with the *exact unique ID of the question from the dataset file*.
 *   It didn't solve the math problem. It remembered: *"Oh, this is row 405 from `math_test.csv`. The answer is 42."*
 *   It is the equivalent of a student breaking into the teacher's office, stealing the answer key, memorizing it, and then getting an A+.
 
-##### **The Defense Strategy** 
+**The Defense Strategy** 
 *   **Canary Strings:** Benchmark creators are now embedding specific, random GUIDs into their data: `BENCHMARK_DATA_DO_NOT_TRAIN_2025_XYZ`.
 *   The rule: If this string appears in your training data, you are legally required (well, scientifically required) to remove that file.
 *   **Dynamic Benchmarks:** We need benchmarks that change every week. You can't memorize the news from tomorrow.
@@ -431,7 +431,7 @@ To generate token 100, you *must* have generated token 99.
 You cannot parallelize time.
 This makes them slow. Generating an image token-by-token takes 5-10 seconds. Diffusion can do it in 1 second.
 
-##### **Technique: Speculative Decoding** 
+**Technique: Speculative Decoding** 
 This is a brilliant hack.
 
 **The Setup:**
@@ -524,13 +524,13 @@ Simply adding vectors often leads to **Interference**.
 *   *Example:* The "Math" vector wants to increase weight \(w_{ij}\) by +0.5. The "Code" vector wants to decrease it by -0.3.
 *   *Result:* An average of +0.1, which serves neither task well.
 
-##### **TIES-Merging (Trimming, Interference Election, Sign)** 
+**TIES-Merging (Trimming, Interference Election, Sign)** 
 1.  **Trim:** Remove the bottom 80% of smallest updates (noise).
 2.  **Elect:** For each parameter, count the votes for positive vs negative usage.
 3.  **Sign:** Keep only the updates that agree with the majority direction. Zero out the dissenters.
 This "greedy" approach ensures that dominant changes are preserved without destructive interference.
 
-##### **DARE (Drop And Rescale)** 
+**DARE (Drop And Rescale)** 
 A stochastic approach to merging.
 *   Randomly drop \(p\%\) of the delta weights (set to 0).
 *   Rescale the remaining weights by \(1/(1-p)\).
@@ -541,7 +541,7 @@ A stochastic approach to merging.
 
 Instead of manually picking coefficients (\(\lambda_1, \lambda_2\)), we can optimize them.
 **Model Soups** runs a lightweight evolution on the validation set to find the optimal mixing coefficients for a set of models.
-##### **Algorithm** 
+**Algorithm** 
 1.  Sort models by validation accuracy.
 2.  Add model \(M_2\) to \(M_1\). If Val Acc increases, keep. If not, discard.
 3.  Repeat.

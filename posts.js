@@ -10,7 +10,8 @@ window.postsReady = (async () => {
     'quantile_regression/blog5_medium.md',
     'llm_components/llm_components_part1.md',
     'llm_components/llm_components_part2.md',
-    'pet_projects/daily_paper_reader/daily-paper-reader.md'
+    'pet_projects/daily_paper_reader/daily-paper-reader.md',
+    'NeurIPS2025/neurips2025_tutorials_report.md'
   ];
 
   // Custom snippets for each blog post
@@ -22,7 +23,8 @@ window.postsReady = (async () => {
     'blog5-medium': 'Master state-of-the-art techniques including conformal prediction, distributional regression, and neural network approaches for robust uncertainty quantification in production.',
     'llm-components-part1': 'A comprehensive guide to understanding transformers from the ground up. Learn tokenization, embeddings, positional encoding, and the architecture that powers modern LLMs like GPT and Claude.',
     'llm-components-part2': 'Dive deep into the attention mechanism—the revolutionary innovation that changed AI forever. Explore self-attention, multi-head attention, and feed-forward networks with intuitive explanations and complete Python implementations.',
-    'daily-paper-reader': 'I built a tool to help me keep up with the flood of AI papers. It fetches the latest papers from ArXiv and OpenReview, summarizes them using Gemini, and presents them in a clean, daily digest.'
+    'daily-paper-reader': 'I built a tool to help me keep up with the flood of AI papers. It fetches the latest papers from ArXiv and OpenReview, summarizes them using a LLM, and presents them in a clean, daily digest.',
+    'neurips2025-tutorials-report': 'Deep dive into six game-changing tutorials from NeurIPS 2025: XAI methods, benchmarking best practices, autoregressive models, imitation learning, and model merging. Technical insights with a side of humor from what 15,000 ML researchers learned in San Diego.'
   };
   const pathCandidates = ['actual_contents/', 'public/actual_contents/'];
 
@@ -33,7 +35,23 @@ window.postsReady = (async () => {
     ghCodeBlocks: true,
     tasklists: true,
     simpleLineBreaks: false,
-    openLinksInNewWindow: true
+    openLinksInNewWindow: true,
+    emoji: true,
+    underline: true,
+    completeHTMLDocument: false,
+    encodeEmails: true,
+    ghCompatibleHeaderId: true,
+    headerLevelStart: 1,
+    literalMidWordUnderscores: true,
+    parseImgDimensions: true,
+    simplifiedAutoLink: true,
+    excludeTrailingPunctuationFromURLs: true,
+    ghMentions: false,
+    smoothLivePreview: false,
+    prefixHeaderId: false,
+    disableForced4SpacesIndentedSublists: false,
+    backslashEscapesHTMLTags: false,
+    tablesHeaderId: false
   });
 
   for (const file of files) {
@@ -208,6 +226,7 @@ window.postsReady = (async () => {
       if (file.includes('quantile_regression')) series = 'quantile_regression';
       else if (file.includes('llm_components')) series = 'llm_components';
       else if (file.includes('pet_projects')) series = 'pet_projects';
+      else if (file.includes('NeurIPS2025')) series = 'neurips2025';
 
       window.posts.push({ slug, title, date, snippet, content, series });
     } catch (err) {

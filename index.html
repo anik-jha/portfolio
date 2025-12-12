@@ -978,6 +978,38 @@
             </div>
           </div>
 
+          <!-- NeurIPS 2025 Series -->
+          <div class="mb-12">
+            <h3 class="text-3xl font-bold text-gray-900 mb-6">NeurIPS 2025 Conference Reports</h3>
+            <p class="text-gray-700 mb-6 text-lg">Comprehensive reports from NeurIPS 2025 in San Diego. Deep technical coverage of tutorials, talks, and research sessions with practical insights for ML practitioners.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              ${window.posts.filter(post => post.series === 'neurips2025').map((post, index) => {
+          const colors = ['from-slate-600 to-gray-800', 'from-sky-500 to-blue-700'];
+          return `
+                  <a href="#blog/${post.slug}" class="blog-post-link group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all cursor-pointer">
+                    <div class="h-48 bg-gradient-to-br ${colors[index % colors.length]} flex items-center justify-center relative overflow-hidden">
+                      <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                      </svg>
+                    </div>
+                    <div class="p-6">
+                      <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-slate-700 transition-colors">
+                        ${post.title}
+                      </h3>
+                      <p class="text-gray-600 mb-4 leading-relaxed">${(post.snippet || 'Click to read more...').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                      <div class="flex items-center text-slate-700 font-medium">
+                        Read Article
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
+                `;
+        }).join('')}
+            </div>
+          </div>
+
           <!-- LLM Components Series -->
           <div class="mb-12">
             <h3 class="text-3xl font-bold text-gray-900 mb-6">LLM Components: A Deep Dive</h3>

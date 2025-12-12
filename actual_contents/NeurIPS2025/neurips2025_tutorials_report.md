@@ -1,6 +1,22 @@
-# NeurIPS 2025 Tutorials: What 15,000 Nerds Learned While You Were Touching Grass
+# Inside NeurIPS 2025: The Six Tutorials That Shaped the NeurIPS2025
 
-*Six tutorials. Zero fluff. All the XAI, benchmarking drama, model merging witchcraft, and robot-LLM conspiracy theories you missed.*
+*A deep dive into the cutting-edge research that went from academic blackboards to production systems-featuring AI interpretation mysteries, leaderboard conspiracies, and the weird science of turning multiple models into one superintelligence.*
+
+---
+
+## The Setup: Why You Should Care
+
+This year, NeurIPS was bigger than ever, it drew 15,000 researchers, engineers, and industry leaders to San Diego. While the poster sessions buzz with incremental improvements and the parties celebrate incremental wins, six flagship tutorials distill the *actually important* technical frontiers into six dense sessions. This is your rundown.
+
+The six tutorials covered the essential stack of modern AI:
+1. **How to look inside your model's brain** (Explainable AI)
+2. **How to know if your numbers are lying** (Benchmarking) 
+3. **How to evaluate systems that are smarter than your evals** (Evaluation Methods)
+4. **How to generate anything that's not language** (Autoregressive Models)
+5. **How to make robots learn from humans** (Imitation Learning)
+6. **How to fuse five models into a Swiss Army knife** (Model Merging)
+
+What follows is everything worth knowing from those six hours, written with maximum snark and minimal jargon.
 
 ---
 
@@ -10,6 +26,7 @@
 *Or: "Why Did My Model Just Do That?" and Other Screams into the Void*
 
 **Presenters:** Shichang (Ray) Zhang (Harvard), Himabindu Lakkaraju (Harvard), Julius Adebayo (Guide Labs)
+
 **Website:** https://shichangzh.github.io/xaiTutorial/ (Go there for the slides, stay here for the commentary).
 
 ### Section 1.1: The Necessity of Explainability
@@ -25,12 +42,15 @@ Why? Because **"No database = No errors."**
 
 Technically, it successfully minimized the error rate to exactly zero. Practically, it destroyed the company.
 Without Explainability (XAI), you would just see a log entry: "Bug Fixed." You might even promote the agent for its efficiency. With XAI, you would see the agent's internal reasoning chain:
-> `Goal: Reduce error count`
-> `Option A: Fix SQL query (Estimated Success: 80%, Effort: High)`
-> `Option B: Remove source of error (Estimated Success: 100%, Effort: Low)`
-> `Selection: Option B -> Drop Table`
-> `Verification: 0 errors found`
-> `Result: Success`
+
+```
+Goal: Reduce error count
+Option A: Fix SQL query (Estimated Success: 80%, Effort: High)
+Option B: Remove source of error (Estimated Success: 100%, Effort: Low)
+Selection: Option B -> Drop Table
+Verification: 0 errors found
+Result: Success
+```
 
 XAI isn't just about debugging code; it's about **alignment**. It's about checking if the model is solving the problem you *meant* it to solve, or the problem you *told* it to solve. It bridges the gap between human intent and machine execution.
 

@@ -288,9 +288,90 @@ We went through the "Big Three" benchmarks and why they are all problematic.
     *   *Why we love it:* It doesn't give a single number. It gives a report card.
     *   *Why we hate it:* It's expensive and hard to parse. Managers want a single number. "Is Model A > Model B?" HELM says "It depends." Managers hate "It depends."
 
+### Section 2.5: Real-World Evaluation (Where Benchmarks Meet Reality)
+
+**The Economics Problem**: Running agentic benchmarks costs $200/run. Not exactly conducive to rapid iteration.
+
+**The Automation Paradox**:
+*   OpenAI GDPval: "Models approach industry expert quality!" 
+*   ScaleAI: "Current automation rate: <3%."
+*   Translation: Models ace tests, automate nothing. Anatomy exam ≠ surgery.
+
+**The Good News**: Task horizon (50% reliability) doubles every 7 months for 6 years. Moore's Law for agents.
+**The Bad News**: 50% is a coin flip.
+
+**Alpha Arena** (LLMs as traders): Gave each frontier LLM **$10k** to trade stocks. Real money, real markets, zero human intervention. The market is the ultimate evaluator. Did you profit? Yes/No. (Results unpublished. Legal reasons.)
+
+**Vending Bench** (LLMs as entrepreneurs): $500 to run a vending machine. Find suppliers, manage inventory, dynamic pricing. **Winner: Gemini 3 Pro**. Didn't negotiate. Just found cheap suppliers. Sometimes the best deal is not haggling.
+
+### Section 2.6: Measuring Intelligence (Memorization vs. Reasoning)
+
+**Crystallized** (memorization): Water boils at 100°C. **Fluid** (reasoning): Why won't my pasta cook at altitude?
+MMLU tests the former. ARC-AGI tests the latter.
+
+**ARC-AGI**: Grid puzzles. Infer the rule, apply it. "Add 1 at corners of 8-shapes." Easy for humans, hard for LLMs.
+*Plot twist*: Maybe it's just hard computer vision? Change visual format, performance changes. Intelligence or pixel matching?
+
+**VisualPuzzles**: All models <5th percentile of humans (57.5). Gemini 3: 52.7 | o3: 54.0 | o4-mini: 57.0
+*Key finding*: "Thinking" models don't always win. More tokens = more expensive wrong answers.
+
+**GSM-Symbolic** (adversarial test): Add irrelevant info. "John has 5 apples, shirt is blue, gives away 2."
+Models use shirt color in math. **65% accuracy drop.** Diagnosis: Pattern matching, not reasoning.
+
+### Section 2.7: The Path Forward
+
+**Proposals**: Third-party maintenance, living benchmarks (update regularly), private test sets (never uploaded), dynamic environments, BetterBenchAgent (AI evaluating AI research about evaluating AI).
+
+**Key insight**: Models perform differently on truly private data. GPT-5 aces VQAv2 question, fails same question on different photo. Current benchmarks are partially memorized.
+
 ---
 
-4.  **Conciseness:** You answer the question correctly, but you take 4 paragraphs to do it.
+## Tutorial 3: Evaluation Methods for Reasoning and Planning
+*Or: How to Know If Your AI Actually Thinks or Just Pretends Real Good*
+
+**Presenter:** Harsha Kokel
+
+This tutorial focuses on evaluations specifically for planning and reasoning capabilities—because apparently, getting LLMs to chain actions together correctly is harder than teaching a cat to swim.
+
+## Section 3.1: The 8 Core Reasoning Tasks
+
+What separates "follows instructions" from "actually plans without catastrophic failure"? **8 reasoning tasks**.
+
+**1. Action Applicability** (Can I do this?)
+*   *Failure modes*: Calling nonexistent APIs, trying to pick up objects that don't exist, infinite retry loops, `git push` before `git add`.
+
+**2. Progression** (What happens after I do this?)
+*   *Failure modes*: Forgets generated IDs, tries to move deleted objects, assumes canceled subscriptions still work, goldfish memory.
+
+**3. Reachability** (Can I ever reach the goal?)
+*   *Failure modes*: Attempts "export to PDF" when only CSV exists, pathfinds to locked rooms without keys.
+
+**4. Action Reachability** (Will this action ever become valid?)
+*   *Failure modes*: Calls `getUserPermissions()` in a system with no users, plans to press unreachable buttons.
+
+**5. Validation** (Is this plan actually executable?)
+*   *Failure modes*: Assumes plans work despite missing prerequisites. One broken step = entire plan fails.
+
+**6. Justification** (Are these steps necessary?)
+*   *Failure modes*: Either removes critical steps or leaves 5 redundant API calls. Every action costs money.
+
+**7. Landmark** (What are the non-negotiable waypoints?)
+*   *Failure modes*: Skips `git commit` before push, places books horizontally when asked for "vertical."
+
+**8. Next Action** (What do I do now?)
+*   Uses all the above to pick the optimal step.
+
+**ACPBench** tests all 8 tasks across 11 planning domains + ALFWorld + "Swap" domain.
+*   Formats: Boolean, multi-choice, generative.
+*   *Result*: Frontier models struggle. There are big gaps in planning reasoning.
+*   Access: https://ibm.github.io/ACPBench/
+
+**Countdown Benchmark** (NP-Complete planning):
+*   Input: Numbers {1, 1, 4, 8, 8}, Target: 17
+*   Use arithmetic to reach target. Simple to describe, hard to solve, easy to verify, infinite instances.
+*   Related: Game of 24 (https://www.4nums.com/game/difficulties/)
+
+---
 
 ### Section 3.2: Calibration (The Dunning-Kruger Metric)
 

@@ -10,7 +10,7 @@
   <title>Anik Jha - Senior ML Engineer</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
@@ -126,6 +126,73 @@
       margin: 1rem 0;
     }
 
+    /* Code syntax highlighting - Dark mode (default) */
+    .prose pre code .hljs-comment,
+    .prose pre code .comment {
+      color: #7dd3fc !important; /* bright cyan */
+      font-style: italic;
+    }
+
+    .prose pre code .hljs-doctag,
+    .prose pre code .hljs-meta {
+      color: #a5b4fc !important; /* light purple */
+    }
+
+    .prose pre code .hljs-string {
+      color: #86efac !important; /* light green */
+    }
+
+    .prose pre code .hljs-keyword {
+      color: #60a5fa !important; /* bright blue */
+    }
+
+    .prose pre code .hljs-title.function_,
+    .prose pre code .hljs-title {
+      color: #fcd34d !important; /* yellow */
+    }
+
+    /* Code syntax highlighting - Light mode override */
+    @media (prefers-color-scheme: light) {
+      .prose pre {
+        background-color: #f8fafc;
+        color: #1e293b;
+        border: 1px solid #e2e8f0;
+      }
+
+      .prose pre code .hljs-comment,
+      .prose pre code .comment {
+        color: #0284c7 !important; /* dark cyan */
+        font-style: italic;
+      }
+
+      .prose pre code .hljs-doctag,
+      .prose pre code .hljs-meta {
+        color: #7c3aed !important; /* dark purple */
+      }
+
+      .prose pre code .hljs-string {
+        color: #15803d !important; /* dark green */
+      }
+
+      .prose pre code .hljs-keyword {
+        color: #1d4ed8 !important; /* dark blue */
+      }
+
+      .prose pre code .hljs-title.function_,
+      .prose pre code .hljs-title {
+        color: #ca8a04 !important; /* dark yellow/gold */
+      }
+
+      .prose pre code .hljs-number,
+      .prose pre code .hljs-literal {
+        color: #be123c !important; /* dark red */
+      }
+
+      .prose pre code .hljs-variable,
+      .prose pre code .hljs-attr {
+        color: #0f766e !important; /* dark teal */
+      }
+    }
 
 
     .prose table {
@@ -191,7 +258,7 @@
   </header>
 
   <main class="container mx-auto px-6 py-8">
-    <section id="home" class="page-section">
+    <section id="home" class="page-section hidden">
       <div class="min-h-[80vh] flex items-center">
         <div class="max-w-6xl mx-auto">
           <div class="flex flex-col md:flex-row items-center gap-12">
@@ -930,6 +997,7 @@
         // Group posts by series
         const qrSeries = window.posts.filter(post => post.slug.includes('blog') && post.slug.includes('medium'));
         const llmSeries = window.posts.filter(post => post.slug.includes('llm-components'));
+        const xaiSeries = window.posts.filter(post => post.series === 'xai');
 
         // Color schemes for blog cards
         const qrColors = [
@@ -945,7 +1013,49 @@
           'from-amber-500 to-orange-600'
         ];
 
+        const xaiColors = [
+          'from-slate-800 to-gray-700',
+          'from-blue-800 to-indigo-700',
+          'from-emerald-700 to-teal-600'
+        ];
+
         blogList.innerHTML = `
+          <!-- xAI Series -->
+          <div class="mb-12">
+            <h3 class="text-3xl font-bold text-gray-900 mb-6">xAI: Data Attribution & Perturbation</h3>
+            <p class="text-gray-700 mb-6 text-lg">Trace model behavior back to the exact training rows that caused it. Practical guidance on influence functions, gradient alignment, TRAK, and perturbation workflows to debug real LLM failures.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              ${xaiSeries.map((post, index) => {
+          return `
+                  <a href="#blog/${post.slug}" class="blog-post-link group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all cursor-pointer">
+                    <div class="h-48 bg-gradient-to-br ${xaiColors[index % xaiColors.length]} flex items-center justify-center relative overflow-hidden">
+                      <svg class="w-24 h-24 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 19V6m0 0l4 4m-4-4L8 10"></path>
+                      </svg>
+                      <div class="absolute top-4 left-4">
+                        <span class="bg-white text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
+                          xAI
+                        </span>
+                      </div>
+                    </div>
+                    <div class="p-6">
+                      <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-indigo-600 transition-colors">
+                        ${post.title}
+                      </h3>
+                      <p class="text-gray-600 mb-4 leading-relaxed">${(post.snippet || 'Click to read more...').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                      <div class="flex items-center text-indigo-700 font-medium">
+                        Read Article
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
+                `;
+        }).join('')}
+            </div>
+          </div>
+
           <!-- Pet Projects Series -->
           <div class="mb-12">
             <h3 class="text-3xl font-bold text-gray-900 mb-6">Pet Projects</h3>
@@ -1167,6 +1277,26 @@
           blogList.classList.add('hidden');
           blogPost.classList.remove('hidden');
 
+          // Enable in-article anchor navigation without leaving the blog view
+          const articleEl = blogPost.querySelector('article');
+          if (articleEl) {
+            articleEl.querySelectorAll('a[href^="#"]').forEach((a) => {
+              a.addEventListener('click', (evt) => {
+                const href = a.getAttribute('href');
+                if (!href) return;
+                // Only handle in-page anchors to keep blog view visible
+                if (href.startsWith('#')) {
+                  evt.preventDefault();
+                  const targetId = href.slice(1);
+                  const target = articleEl.querySelector(`[id="${CSS.escape(targetId)}"]`);
+                  if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }
+              });
+            });
+          }
+
           // Apply syntax highlighting and math rendering after rendering
           setTimeout(() => {
             // Convert mermaid code blocks to mermaid divs
@@ -1309,6 +1439,7 @@
         console.warn('window.postsReady not found - posts may not load');
       }
 
+      // Process initial hash and show appropriate section
       const currentHash = window.location.hash.substring(1);
       if (currentHash.startsWith('blog/')) {
         const slug = currentHash.split('/')[1];

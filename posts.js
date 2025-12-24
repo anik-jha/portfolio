@@ -3,6 +3,8 @@
 window.posts = [];
 window.postsReady = (async () => {
   const files = [
+    'xAI/data_attribution_part1.md',
+    // 'xAI/data_attribution_part2.md',  // Hidden for now
     'quantile_regression/blog1_medium.md',
     'quantile_regression/blog2_medium.md',
     'quantile_regression/blog3_medium.md',
@@ -16,6 +18,8 @@ window.postsReady = (async () => {
 
   // Custom snippets for each blog post
   const customSnippets = {
+    'data-attribution-part1': 'When your LLM says 2+2=5, you need to find the smoking gun. Learn gradient alignment, influence functions, and how to build attribution pipelines that trace model behavior back to the exact training rows that broke it.',
+    'data-attribution-part2': 'Prove your attribution was right by actually removing the data and retraining (the scientific method for ML). Then scale to billions of rows using TRAK, DataInf, and production tricks that don\'t require a PhD in infrastructure.',
     'blog1-medium': 'Your model predicts the average. Great! But averages are for trivia night, not for decisions with consequences. Learn why quantile regression is essential for high-stakes ML.',
     'blog2-medium': 'Why does asymmetric loss lead to quantile predictions? Dive deep into the pinball loss function and understand the mathematical engine powering quantile regression.',
     'blog3-medium': 'Build your first quantile regression model in Python. Step-by-step implementation with statsmodels, complete with evaluation metrics and real-world examples.',
@@ -227,6 +231,7 @@ window.postsReady = (async () => {
       else if (file.includes('llm_components')) series = 'llm_components';
       else if (file.includes('pet_projects')) series = 'pet_projects';
       else if (file.includes('NeurIPS2025')) series = 'neurips2025';
+      else if (file.includes('xAI')) series = 'xai';
 
       window.posts.push({ slug, title, date, snippet, content, series });
     } catch (err) {

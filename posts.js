@@ -231,7 +231,7 @@ window.postsReady = (async () => {
       else if (file.includes('llm_components')) series = 'llm_components';
       else if (file.includes('pet_projects')) series = 'pet_projects';
       else if (file.includes('NeurIPS2025')) series = 'neurips2025';
-      else if (file.includes('xAI')) series = 'xai';
+      else if (file.includes('xai')) series = 'xai';
 
       window.posts.push({ slug, title, date, snippet, content, series });
     } catch (err) {

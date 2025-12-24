@@ -2,9 +2,18 @@
 <html lang="en">
 
 <head>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S27PF249F2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-S27PF249F2');
+  </script>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-http="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>Anik Jha - Senior ML Engineer</title>
@@ -24,6 +33,11 @@
     mermaid.initialize({ startOnLoad: false }); // Don't auto-start, we'll trigger manually
     window.mermaid = mermaid; // Expose globally
   </script>
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  
   <style>
     html {
       scroll-behavior: smooth;
@@ -833,6 +847,32 @@
     };
 
     document.addEventListener('DOMContentLoaded', async () => {
+      // Firebase Configuration
+     const firebaseConfig = {
+    apiKey: "AIzaSyAVcreucMJPJpstD9X0LhhRBwMs3vfN7G8",
+    authDomain: "portfolio-1389b.firebaseapp.com",
+    projectId: "portfolio-1389b",
+    storageBucket: "portfolio-1389b.firebasestorage.app",
+    messagingSenderId: "418803521288",
+    appId: "1:418803521288:web:f80f1fa69720fdfcaf7ebd",
+    measurementId: "G-1HXHGBXD3M"
+  };
+
+
+      // Initialize Firebase
+      let db = null;
+      try {
+        if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== 'YOUR_API_KEY') {
+          firebase.initializeApp(firebaseConfig);
+          db = firebase.firestore();
+          console.log('Firebase initialized successfully');
+        } else {
+          console.warn('Firebase not configured. Using local storage only.');
+        }
+      } catch (error) {
+        console.error('Firebase initialization error:', error);
+      }
+
       const navLinks = document.querySelectorAll('.nav-link');
       const sections = document.querySelectorAll('.page-section');
       const blogList = document.getElementById('blog-list');
@@ -850,6 +890,15 @@
             section.classList.add('hidden');
           }
         });
+
+        // Track page view in Google Analytics
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'page_view', {
+            page_title: id,
+            page_location: window.location.href,
+            page_path: '#' + id
+          });
+        }
 
         // Update page title based on section
         const sectionTitles = {
@@ -1244,6 +1293,16 @@
 
           // Update browser tab title
           document.title = post.title + ' | Anik Jha';
+
+          // Track blog post view in Google Analytics
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'view_blog_post', {
+              blog_title: post.title,
+              blog_slug: post.slug,
+              blog_series: post.series || 'none',
+              page_location: window.location.href
+            });
+          }
 
           blogPost.innerHTML = `
             <article class="bg-white rounded-xl shadow-lg p-8 md:p-12">
@@ -1643,24 +1702,64 @@
         }
       });
 
-      // ========== Like and View Count Functions ==========
+      // ========== Like and View Count Functions (Firebase + LocalStorage) ==========
       
-      function getLikes(slug) {
+      // Get like data from Firestore or localStorage
+      async function getLikes(slug) {
+        if (db) {
+          try {
+            const docRef = db.collection('likes').doc(slug);
+            const doc = await docRef.get();
+            const globalCount = doc.exists ? doc.data().count : 0;
+            
+            // Check if user has liked this post (local storage for user state)
+            const userLikes = JSON.parse(localStorage.getItem('userLikes') || '{}');
+            return { count: globalCount, userLiked: userLikes[slug] || false };
+          } catch (error) {
+            console.error('Error fetching likes from Firestore:', error);
+          }
+        }
+        // Fallback to localStorage
         const likes = JSON.parse(localStorage.getItem('blogLikes') || '{}');
         return likes[slug] || { count: 0, userLiked: false };
       }
 
-      function setLikes(slug, count, userLiked) {
-        const likes = JSON.parse(localStorage.getItem('blogLikes') || '{}');
-        likes[slug] = { count, userLiked };
-        localStorage.setItem('blogLikes', JSON.stringify(likes));
+      // Update like count in Firestore
+      async function updateLikeCount(slug, increment) {
+        if (db) {
+          try {
+            const docRef = db.collection('likes').doc(slug);
+            await db.runTransaction(async (transaction) => {
+              const doc = await transaction.get(docRef);
+              const currentCount = doc.exists ? doc.data().count : 0;
+              const newCount = Math.max(0, currentCount + increment); // Prevent negative counts
+              transaction.set(docRef, { count: newCount, slug: slug });
+              return newCount;
+            });
+          } catch (error) {
+            console.error('Error updating likes in Firestore:', error);
+          }
+        } else {
+          // Fallback to localStorage
+          const likes = JSON.parse(localStorage.getItem('blogLikes') || '{}');
+          const current = likes[slug] || { count: 0, userLiked: false };
+          likes[slug] = { count: Math.max(0, current.count + increment), userLiked: current.userLiked };
+          localStorage.setItem('blogLikes', JSON.stringify(likes));
+        }
       }
 
-      function setupLikeButton(slug) {
+      // Set user's like state (always in localStorage)
+      function setUserLiked(slug, liked) {
+        const userLikes = JSON.parse(localStorage.getItem('userLikes') || '{}');
+        userLikes[slug] = liked;
+        localStorage.setItem('userLikes', JSON.stringify(userLikes));
+      }
+
+      async function setupLikeButton(slug) {
         const likeBtn = document.getElementById(`like-btn-${slug}`);
         if (!likeBtn) return;
 
-        const likeData = getLikes(slug);
+        const likeData = await getLikes(slug);
         const likeCount = likeBtn.querySelector('.like-count');
         const likeText = likeBtn.querySelector('.like-text');
         
@@ -1672,17 +1771,32 @@
         }
 
         // Handle click
-        likeBtn.addEventListener('click', () => {
-          const currentData = getLikes(slug);
+        likeBtn.addEventListener('click', async () => {
+          const currentData = await getLikes(slug);
           const newUserLiked = !currentData.userLiked;
-          const newCount = newUserLiked ? currentData.count + 1 : currentData.count - 1;
+          const increment = newUserLiked ? 1 : -1;
           
-          setLikes(slug, newCount, newUserLiked);
-          likeCount.textContent = newCount;
+          // Update user state immediately for UI responsiveness
+          setUserLiked(slug, newUserLiked);
+          likeCount.textContent = currentData.count + increment;
+          
+          // Update global count in Firestore
+          await updateLikeCount(slug, increment);
+          
+          // Refresh to show actual count
+          const updatedData = await getLikes(slug);
+          likeCount.textContent = updatedData.count;
           
           if (newUserLiked) {
             likeBtn.classList.add('liked');
             likeText.textContent = 'Liked';
+            // Track like in Google Analytics
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'like_post', {
+                post_slug: slug,
+                like_count: updatedData.count
+              });
+            }
             // Animate heart
             likeBtn.querySelector('.heart-icon').style.transform = 'scale(1.3)';
             setTimeout(() => {
@@ -1691,34 +1805,83 @@
           } else {
             likeBtn.classList.remove('liked');
             likeText.textContent = 'Like';
+            // Track unlike in Google Analytics
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'unlike_post', {
+                post_slug: slug,
+                like_count: updatedData.count
+              });
+            }
           }
         });
       }
 
-      function getViewCount(slug) {
+      // Get view count from Firestore or localStorage
+      async function getViewCount(slug) {
+        if (db) {
+          try {
+            const docRef = db.collection('views').doc(slug);
+            const doc = await docRef.get();
+            return doc.exists ? doc.data().count : 0;
+          } catch (error) {
+            console.error('Error fetching views from Firestore:', error);
+          }
+        }
+        // Fallback to localStorage
         const views = JSON.parse(localStorage.getItem('blogViews') || '{}');
         return views[slug] || 0;
       }
 
-      function incrementViewCount(slug) {
-        const views = JSON.parse(localStorage.getItem('blogViews') || '{}');
-        views[slug] = (views[slug] || 0) + 1;
-        localStorage.setItem('blogViews', JSON.stringify(views));
-      }
-
-      function displayViewCount(slug) {
-        const viewCountEl = document.querySelector(`#view-count-${slug} .view-count`);
-        if (viewCountEl) {
-          viewCountEl.textContent = getViewCount(slug);
+      // Increment view count in Firestore
+      async function incrementViewCount(slug) {
+        if (db) {
+          try {
+            const docRef = db.collection('views').doc(slug);
+            await db.runTransaction(async (transaction) => {
+              const doc = await transaction.get(docRef);
+              const currentCount = doc.exists ? doc.data().count : 0;
+              transaction.set(docRef, { count: currentCount + 1, slug: slug });
+            });
+          } catch (error) {
+            console.error('Error incrementing views in Firestore:', error);
+          }
+        } else {
+          // Fallback to localStorage
+          const views = JSON.parse(localStorage.getItem('blogViews') || '{}');
+          views[slug] = (views[slug] || 0) + 1;
+          localStorage.setItem('blogViews', JSON.stringify(views));
         }
       }
 
-      // Track page views for portfolio sections
-      function trackPageView(sectionId) {
-        const pageViews = JSON.parse(localStorage.getItem('pageViews') || '{}');
-        pageViews[sectionId] = (pageViews[sectionId] || 0) + 1;
-        localStorage.setItem('pageViews', JSON.stringify(pageViews));
-        console.log(`Page view tracked: ${sectionId} - ${pageViews[sectionId]} views`);
+      async function displayViewCount(slug) {
+        const viewCountEl = document.querySelector(`#view-count-${slug} .view-count`);
+        if (viewCountEl) {
+          const count = await getViewCount(slug);
+          viewCountEl.textContent = count;
+        }
+      }
+
+      // Track page views for portfolio sections in Firestore
+      async function trackPageView(sectionId) {
+        if (db) {
+          try {
+            const docRef = db.collection('pageViews').doc(sectionId);
+            await db.runTransaction(async (transaction) => {
+              const doc = await transaction.get(docRef);
+              const currentCount = doc.exists ? doc.data().count : 0;
+              transaction.set(docRef, { count: currentCount + 1, section: sectionId });
+            });
+            console.log(`Page view tracked in Firestore: ${sectionId}`);
+          } catch (error) {
+            console.error('Error tracking page view:', error);
+          }
+        } else {
+          // Fallback to localStorage
+          const pageViews = JSON.parse(localStorage.getItem('pageViews') || '{}');
+          pageViews[sectionId] = (pageViews[sectionId] || 0) + 1;
+          localStorage.setItem('pageViews', JSON.stringify(pageViews));
+          console.log(`Page view tracked locally: ${sectionId} - ${pageViews[sectionId]} views`);
+        }
       }
 
       // Track page view when section changes

@@ -1,3 +1,7 @@
+---
+date: 2025-12-23
+---
+
 # Data Attribution Deep Dive: Part 1 - Foundations & Methods
 
 *The "Who Broke the Build?" of AI: Finding the Exact Training Row That Made Your Model Say 2+2=5*

@@ -194,6 +194,34 @@
       }
     }
 
+    /* Like button styling */
+    .like-button {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .like-button.liked {
+      border-color: #ef4444 !important;
+      background-color: #fef2f2 !important;
+    }
+
+    .like-button.liked .heart-icon {
+      fill: #ef4444;
+      stroke: #ef4444;
+    }
+
+    .like-button:active {
+      transform: scale(0.95);
+    }
+
+    .like-button .heart-icon {
+      transition: all 0.2s ease;
+    }
+
+    .like-button:hover .heart-icon {
+      transform: scale(1.1);
+    }
+
 
     .prose table {
       width: 100%;
@@ -1246,11 +1274,36 @@
                     </svg>
                     ${post.date}
                   </span>
+                  <span class="flex items-center gap-2" id="view-count-${post.slug}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                    <span class="view-count">0</span> views
+                  </span>
                 </div>
               ` : ''}
               
               <div class="mt-8 prose prose-lg prose-blue max-w-none">
                 ${post.content}
+              </div>
+
+              <!-- Like and Engagement Section -->
+              <div class="mt-12 pt-8 border-t border-gray-200">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-4">
+                    <button id="like-btn-${post.slug}" class="like-button flex items-center gap-2 px-6 py-3 rounded-full border-2 border-gray-300 hover:border-red-500 hover:bg-red-50 transition-all duration-200" data-slug="${post.slug}">
+                      <svg class="w-6 h-6 heart-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                      </svg>
+                      <span class="like-text font-semibold">Like</span>
+                      <span class="like-count bg-gray-100 px-3 py-1 rounded-full text-sm font-bold">0</span>
+                    </button>
+                  </div>
+                  <div class="text-sm text-gray-500">
+                    Found this helpful? Give it a like!
+                  </div>
+                </div>
               </div>
               
               ${seriesInfo ? `
@@ -1276,6 +1329,13 @@
           `;
           blogList.classList.add('hidden');
           blogPost.classList.remove('hidden');
+
+          // Track and display view count
+          incrementViewCount(post.slug);
+          displayViewCount(post.slug);
+
+          // Setup like button
+          setupLikeButton(post.slug);
 
           // Enable in-article anchor navigation without leaving the blog view
           const articleEl = blogPost.querySelector('article');
@@ -1582,6 +1642,92 @@
           document.body.style.overflow = 'auto';
         }
       });
+
+      // ========== Like and View Count Functions ==========
+      
+      function getLikes(slug) {
+        const likes = JSON.parse(localStorage.getItem('blogLikes') || '{}');
+        return likes[slug] || { count: 0, userLiked: false };
+      }
+
+      function setLikes(slug, count, userLiked) {
+        const likes = JSON.parse(localStorage.getItem('blogLikes') || '{}');
+        likes[slug] = { count, userLiked };
+        localStorage.setItem('blogLikes', JSON.stringify(likes));
+      }
+
+      function setupLikeButton(slug) {
+        const likeBtn = document.getElementById(`like-btn-${slug}`);
+        if (!likeBtn) return;
+
+        const likeData = getLikes(slug);
+        const likeCount = likeBtn.querySelector('.like-count');
+        const likeText = likeBtn.querySelector('.like-text');
+        
+        // Set initial state
+        likeCount.textContent = likeData.count;
+        if (likeData.userLiked) {
+          likeBtn.classList.add('liked');
+          likeText.textContent = 'Liked';
+        }
+
+        // Handle click
+        likeBtn.addEventListener('click', () => {
+          const currentData = getLikes(slug);
+          const newUserLiked = !currentData.userLiked;
+          const newCount = newUserLiked ? currentData.count + 1 : currentData.count - 1;
+          
+          setLikes(slug, newCount, newUserLiked);
+          likeCount.textContent = newCount;
+          
+          if (newUserLiked) {
+            likeBtn.classList.add('liked');
+            likeText.textContent = 'Liked';
+            // Animate heart
+            likeBtn.querySelector('.heart-icon').style.transform = 'scale(1.3)';
+            setTimeout(() => {
+              likeBtn.querySelector('.heart-icon').style.transform = 'scale(1)';
+            }, 200);
+          } else {
+            likeBtn.classList.remove('liked');
+            likeText.textContent = 'Like';
+          }
+        });
+      }
+
+      function getViewCount(slug) {
+        const views = JSON.parse(localStorage.getItem('blogViews') || '{}');
+        return views[slug] || 0;
+      }
+
+      function incrementViewCount(slug) {
+        const views = JSON.parse(localStorage.getItem('blogViews') || '{}');
+        views[slug] = (views[slug] || 0) + 1;
+        localStorage.setItem('blogViews', JSON.stringify(views));
+      }
+
+      function displayViewCount(slug) {
+        const viewCountEl = document.querySelector(`#view-count-${slug} .view-count`);
+        if (viewCountEl) {
+          viewCountEl.textContent = getViewCount(slug);
+        }
+      }
+
+      // Track page views for portfolio sections
+      function trackPageView(sectionId) {
+        const pageViews = JSON.parse(localStorage.getItem('pageViews') || '{}');
+        pageViews[sectionId] = (pageViews[sectionId] || 0) + 1;
+        localStorage.setItem('pageViews', JSON.stringify(pageViews));
+        console.log(`Page view tracked: ${sectionId} - ${pageViews[sectionId]} views`);
+      }
+
+      // Track page view when section changes
+      const originalShowSection = showSection;
+      showSection = function(id) {
+        originalShowSection(id);
+        trackPageView(id);
+      };
+
     });
   </script>
 

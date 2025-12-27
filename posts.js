@@ -4,7 +4,7 @@ window.posts = [];
 window.postsReady = (async () => {
   const files = [
     'xai/data_attribution_part1.md',
-    // 'xai/data_attribution_part2.md',  // Hidden for now
+    'xai/data_attribution_part2.md',
     'quantile_regression/blog1_medium.md',
     'quantile_regression/blog2_medium.md',
     'quantile_regression/blog3_medium.md',

@@ -229,6 +229,10 @@ The CSS is tuned to fit everything on **exactly one page**. Because if your resu
 
 *The generated resume. Clean, professional, ATS-friendly, and guaranteed to fit on one page.*
 
+**But wait, there's more!** The resume isn't set in stone. After generation, you can click directly on the resume preview to edit it in real-time. Change a word, tweak a bullet point, fix a typo. The interface uses `contenteditable`, so it's as simple as clicking and typing. When you're happy with your edits, hit the "Download Resume (from edited)" button, and the app regenerates the PDF with your changes on the fly.
+
+This is huge because sometimes the AI gets 95% of the way there, but you want to adjust the phrasing or add a specific detail. No need to regenerate from scratch or edit in a separate tool. Just click, edit, download.
+
 ### 5. The LinkedIn Outreach Message
 
 As a bonus, the system also generates a personalized LinkedIn message to send to recruiters. This uses a separate prompt that:

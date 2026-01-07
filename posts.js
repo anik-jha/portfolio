@@ -13,6 +13,7 @@ window.postsReady = (async () => {
     'llm_components/llm_components_part1.md',
     'llm_components/llm_components_part2.md',
     'pet_projects/daily_paper_reader/daily-paper-reader.md',
+    'pet_projects/resume_builder/ai-resume-builder.md',
     'NeurIPS2025/neurips2025_tutorials_report.md'
   ];
 
@@ -28,6 +29,7 @@ window.postsReady = (async () => {
     'llm-components-part1': 'A comprehensive guide to understanding transformers from the ground up. Learn tokenization, embeddings, positional encoding, and the architecture that powers modern LLMs like GPT and Claude.',
     'llm-components-part2': 'Dive deep into the attention mechanism—the revolutionary innovation that changed AI forever. Explore self-attention, multi-head attention, and feed-forward networks with intuitive explanations and complete Python implementations.',
     'daily-paper-reader': 'I built a tool to help me keep up with the flood of AI papers. It fetches the latest papers from ArXiv and OpenReview, summarizes them using a LLM, and presents them in a clean, daily digest.',
+    'ai-resume-builder': 'Beat the ATS game with AI. A Flask-based tool that analyzes your resume against job descriptions and rewrites it for maximum compatibility - without hallucinating experience. Includes compatibility scoring, gap analysis, and one-page PDF generation.',
     'neurips2025-tutorials-report': 'Deep dive into six game-changing tutorials from NeurIPS 2025: XAI methods, benchmarking best practices, autoregressive models, imitation learning, and model merging. Technical insights with a side of humor from what 15,000 ML researchers learned in San Diego.'
   };
   const pathCandidates = ['actual_contents/', 'public/actual_contents/'];
@@ -222,7 +224,9 @@ window.postsReady = (async () => {
 
       content = content.replace(/\<img([^\>]+)src="\.\.\/assets\/([^"]+)"([^\>]*)\>/g, `<img$1src="actual_contents/${fileDirectory}/assets/$2"$3>`);
       content = content.replace(/\<img([^\>]+)src="assets\/([^"]+)"([^\>]*)\>/g, `<img$1src="actual_contents/${fileDirectory}/assets/$2"$3>`);
-      // Also handle direct image references without assets/ prefix
+      // Handle subdirectory image references (e.g., demo_images/file.png)
+      content = content.replace(/\<img([^\>]+)src="([^"/:]+)\/([^"]+\.(png|jpg|jpeg|gif|svg))"([^\>]*)\>/g, `<img$1src="actual_contents/${fileDirectory}/$2/$3"$5>`);
+      // Also handle direct image references without folder prefix
       content = content.replace(/\<img([^\>]+)src="([^"/:]+\.(png|jpg|jpeg|gif|svg))"([^\>]*)\>/g, `<img$1src="actual_contents/${fileDirectory}/$2"$4>`);
 
       // Determine series from folder path
